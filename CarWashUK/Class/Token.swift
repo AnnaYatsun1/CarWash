@@ -8,7 +8,4 @@
 
 import Foundation
 
-class Token {
-    
-    var isRunning = Atomic(true)
-}
+

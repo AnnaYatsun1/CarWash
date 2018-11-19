@@ -20,7 +20,6 @@ class Factory: Synchronizable {
     }
     
     func startMakeCars() {
-        //        let token = DispatchQueue.background.asyncAfterRepeating(interval: 4.0, execute: factory.startMakeCars)
         self.queue.asyncAfterRepeating(interval: interval) {
             10.times {
                 self.queue.async {
@@ -28,7 +27,7 @@ class Factory: Synchronizable {
                     self.carWash.wash(car: someCar)
                 }
             }
-            self.startMakeCars()
+//            self.startMakeCars()
         }
     }
 }

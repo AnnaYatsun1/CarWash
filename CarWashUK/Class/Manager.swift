@@ -12,6 +12,5 @@ class Manager<Processing: MoneGiver & Stateble>: Staff<Processing> {
     
     override func performProcessing(object: Processing) {
         object.state = .available
-//        super.performProcessing(object: object)
     }
 }

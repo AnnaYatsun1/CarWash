@@ -31,7 +31,7 @@ class CarWash: Synchronizable {
         let queueCars = self.queueCars
         
         self.synchronize {
-            if queueCars.isEmpty && self.washer.state == .available {
+            if self.washer.state == .available {
                 self.process(car: car)
             } else {
                 queueCars.enqueue(car)
@@ -46,17 +46,15 @@ class CarWash: Synchronizable {
     }
     
     func countMoney(washer: Washer) {
-//        let washer = self.washer
         let accountant = self.accountant
         
-        accountant.doStaffWork(object: washer) {
-            self.queueCars.dequeue().do(self.process)
-            self.director.doStaffWork(object: accountant) {
-                self.queueOfWashers.dequeue().do(self.countMoney)
-//                if washer.state == .waitProcessing {
-//                    self.countMoney()
-//                }
+        accountant
+            .doStaffWork(object: washer) {
+                self.queueCars.dequeue().do(self.process)
+                self.director.doStaffWork(object: accountant) {
+                    self.queueOfWashers.dequeue().do(self.countMoney)
+                }
             }
-        } .do(self.queueOfWashers.enqueue)
+            .do(self.queueOfWashers.enqueue)
     }
 }

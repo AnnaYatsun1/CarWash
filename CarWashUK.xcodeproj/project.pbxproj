@@ -20,7 +20,7 @@
 		3F0878DA218AE611002EE9A7 /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878D9218AE611002EE9A7 /* Director.swift */; };
 		3F0878DC218AF1E4002EE9A7 /* NSLocking+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878DB218AF1E4002EE9A7 /* NSLocking+Extensions.swift */; };
 		3F0878DE218AF798002EE9A7 /* CarWash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878DD218AF798002EE9A7 /* CarWash.swift */; };
-		3F0878E0218AF80B002EE9A7 /* Optional+Extensions .swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878DF218AF80B002EE9A7 /* Optional+Extensions .swift */; };
+		3F0878E0218AF80B002EE9A7 /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878DF218AF80B002EE9A7 /* Optional+Extensions.swift */; };
 		3F0878E2218AF900002EE9A7 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E1218AF900002EE9A7 /* Queue.swift */; };
 		3F0878E4218B0DCC002EE9A7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E3218B0DCC002EE9A7 /* main.swift */; };
 		3F0878E6218B0E0B002EE9A7 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E5218B0E0B002EE9A7 /* Int+Extensions.swift */; };
@@ -60,7 +60,7 @@
 		3F0878D9218AE611002EE9A7 /* Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
 		3F0878DB218AF1E4002EE9A7 /* NSLocking+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLocking+Extensions.swift"; sourceTree = "<group>"; };
 		3F0878DD218AF798002EE9A7 /* CarWash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarWash.swift; sourceTree = "<group>"; };
-		3F0878DF218AF80B002EE9A7 /* Optional+Extensions .swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+Extensions .swift"; sourceTree = "<group>"; };
+		3F0878DF218AF80B002EE9A7 /* Optional+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+Extensions.swift"; sourceTree = "<group>"; };
 		3F0878E1218AF900002EE9A7 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		3F0878E3218B0DCC002EE9A7 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3F0878E5218B0E0B002EE9A7 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 		3F0878D22189E598002EE9A7 /* Extentions */ = {
 			isa = PBXGroup;
 			children = (
-				3F0878DF218AF80B002EE9A7 /* Optional+Extensions .swift */,
+				3F0878DF218AF80B002EE9A7 /* Optional+Extensions.swift */,
 				3F0878D32189E5BD002EE9A7 /* DispatchTime+Extensions.swift */,
 				3F0878DB218AF1E4002EE9A7 /* NSLocking+Extensions.swift */,
 				3F0878E5218B0E0B002EE9A7 /* Int+Extensions.swift */,
@@ -237,7 +237,7 @@
 				3F0878D12189E064002EE9A7 /* Atomic.swift in Sources */,
 				3F0878CF2189DBDD002EE9A7 /* Washer.swift in Sources */,
 				3F0878DE218AF798002EE9A7 /* CarWash.swift in Sources */,
-				3F0878E0218AF80B002EE9A7 /* Optional+Extensions .swift in Sources */,
+				3F0878E0218AF80B002EE9A7 /* Optional+Extensions.swift in Sources */,
 				3F0878D42189E5BD002EE9A7 /* DispatchTime+Extensions.swift in Sources */,
 				3F0878DC218AF1E4002EE9A7 /* NSLocking+Extensions.swift in Sources */,
 				3F0878CD2189DA10002EE9A7 /* MoneyReceiver.swift in Sources */,
