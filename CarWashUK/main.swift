@@ -8,66 +8,17 @@
 
 import Foundation
 
-let action = { print("HELLO") }
-var token = DispatchQueue.background.somthing(interval: 1.0, execute: action)
+let washer =  Washer(id: 1, name: "Lika", queue: .background)
+let director = Director(id: 2, name: "Nila", queue: .background)
+let accountant =  Accountant(id: 3, name: "Fima", queue: .background)
+let iterval = TimeInterval(4.0)
 
-sleep(1)
+let carWash = CarWash(washer: washer, accountant: accountant, director: director)
+let factory = Factory(carWash: carWash, interval: iterval)
+let token = DispatchQueue.background.asyncAfterRepeating(interval: 4.0, execute: factory.startMakeCars)
 
-token.isRunning.value = false
-
-//DispatchQueue.background.somthing(interval: 1.0, execute: action)
-sleep(5)
-//func test() {
-//    let washer =  Washer(id: 1, name: "Lika", queue: .background)
-//    let director = Director(id: 2, name: "Nila", queue: .background)
-//    let accountant =  Accountant(id: 3, name: "Fima", queue: .background)
-//
-//
-//    let carWash = CarWash(washer: washer, accountant: accountant, director: director)
-//    let timer = DispatchSource.makeTimerSource()
-//    timer.schedule(deadline: .after(interval: 2))
-//let entity = ProgenousEntity(queue: .background)
-//let factory = Factory(carWash: carWash)
-////entity.isRuning
-//factory.startMakeCars()
 //sleep(5)
-//factory.stopMakeCars()
-
-
-//    factory.start()
-//    factory.stop()
-//    RunLoop.current.run()
-//    sleep(10)
-//}
-//
-//let washer =  Washer(id: 1, name: "Lika", queue: .background)
-//let director = Director(id: 2, name: "Nila", queue: .background)
-//let accountant =  Accountant(id: 3, name: "Fima", queue: .background)
-
-//
-//let carWash = CarWash(washer: washer, accountant: accountant, director: director)
-//let timer = DispatchSource.makeTimerSource()
-//timer.schedule(deadline: .after(interval: 2))
-////
-//var factory = Optional(Factory(carWash: carWash))
-//factory?.startMakeCars()
-//factory?.start()
-//sleep(5)
-//factory?.stop()
-//sleep(3)
-//factory?.start()
-
-//factory = nil
-//func A(){
-//10.times {
-//    let someCar = Car(money: 10, model: "BMW", owner: "Вася")
-//    carWash.wash(car: someCar)
-//}
-//}
-//DispatchQueue.background.somthing()
-
-
-
+//token.isRunning.value = false
 
 RunLoop.current.run()
 

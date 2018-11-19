@@ -29,6 +29,8 @@
 		3FA2087B21942A9D006F3D1A /* Synchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087A21942A9D006F3D1A /* Synchronizable.swift */; };
 		3FA2087D21942BCF006F3D1A /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087C21942BCF006F3D1A /* Factory.swift */; };
 		3FA2087F219587ED006F3D1A /* Stateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087E219587ED006F3D1A /* Stateable.swift */; };
+		3FC95C39219EBB78007B1B78 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC95C38219EBB78007B1B78 /* Token.swift */; };
+		3FC95C3B219ECACB007B1B78 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC95C3A219ECACB007B1B78 /* Manager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,6 +69,8 @@
 		3FA2087A21942A9D006F3D1A /* Synchronizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizable.swift; sourceTree = "<group>"; };
 		3FA2087C21942BCF006F3D1A /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		3FA2087E219587ED006F3D1A /* Stateable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stateable.swift; sourceTree = "<group>"; };
+		3FC95C38219EBB78007B1B78 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		3FC95C3A219ECACB007B1B78 /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,8 @@
 				3F0878DD218AF798002EE9A7 /* CarWash.swift */,
 				3F0878E1218AF900002EE9A7 /* Queue.swift */,
 				3FA2087C21942BCF006F3D1A /* Factory.swift */,
+				3FC95C38219EBB78007B1B78 /* Token.swift */,
+				3FC95C3A219ECACB007B1B78 /* Manager.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -241,6 +247,8 @@
 				3F0878E2218AF900002EE9A7 /* Queue.swift in Sources */,
 				3F0878CB2189D975002EE9A7 /* MoneyGiver.swift in Sources */,
 				3FA2087B21942A9D006F3D1A /* Synchronizable.swift in Sources */,
+				3FC95C3B219ECACB007B1B78 /* Manager.swift in Sources */,
+				3FC95C39219EBB78007B1B78 /* Token.swift in Sources */,
 				3F0878C22189D732002EE9A7 /* State.swift in Sources */,
 				3FA2087D21942BCF006F3D1A /* Factory.swift in Sources */,
 				3FA2087F219587ED006F3D1A /* Stateable.swift in Sources */,

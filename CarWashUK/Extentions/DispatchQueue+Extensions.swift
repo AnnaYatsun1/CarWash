@@ -18,23 +18,19 @@ extension DispatchQueue {
 extension DispatchQueue {
     
     @discardableResult
-    func somthing(interval: TimeInterval, execute: @escaping F.Execute) -> Token {
-        let token = Token()
+    func asyncAfterRepeating(interval: TimeInterval, execute: @escaping F.Execute) -> Token {
+        let token = Token()  //  default true
         
         self.asyncAfter(deadline: .after(interval: interval)) {
-            execute()
             if token.isRunning.value {
-                self.somthing(interval: interval, execute: execute)
-            }
-            else {
-                print("1011111")	
+                self.asyncAfter(deadline: .after(interval: interval)) {
+                    execute()
+                }
+            } else {
+                print("token.isRunning.value false")
             }
         }
         
         return token
     }
-}
-
-class Token {
-    var isRunning = Atomic(true)
 }

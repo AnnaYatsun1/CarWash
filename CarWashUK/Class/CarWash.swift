@@ -14,8 +14,8 @@ class CarWash: Synchronizable {
     let accountant: Accountant
     let director: Director
     
-    var isWashing = false
     private let queueCars = Queue<Car>()
+    private let queueOfWashers = Queue<Washer>()
     
     init(
         washer: Washer,
@@ -28,39 +28,35 @@ class CarWash: Synchronizable {
     }
     
     func wash(car: Car) {
+        let queueCars = self.queueCars
+        
         self.synchronize {
-            if !self.isWashing {
-                self.isWashing = true
+            if queueCars.isEmpty && self.washer.state == .available {
                 self.process(car: car)
             } else {
-                self.queueCars.enqueue(car)
+                queueCars.enqueue(car)
             }
         }
     }
-    //  нужно проверять очередь машин, что бы выйти из рекурсии
-    //  давай это уже завтра, тут недолго
     
     func process(car: Car) {
         self.washer.doStaffWork(object: car) {
-          if self.accountant.state == .available {
-                self.countMoney()
-            }
+            self.countMoney(washer: self.washer)
         }
     }
     
-    func countMoney() {
-        let washer = self.washer
+    func countMoney(washer: Washer) {
+//        let washer = self.washer
         let accountant = self.accountant
         
-        if accountant.state == .available {
-            accountant.doStaffWork(object: washer) {
-                self.queueCars.dequeue().do(self.process)
-                self.director.doStaffWork(object: accountant) {
-                    if washer.state == .waitProcessing {
-                        self.countMoney()
-                    }
-                }
+        accountant.doStaffWork(object: washer) {
+            self.queueCars.dequeue().do(self.process)
+            self.director.doStaffWork(object: accountant) {
+                self.queueOfWashers.dequeue().do(self.countMoney)
+//                if washer.state == .waitProcessing {
+//                    self.countMoney()
+//                }
             }
-        }
+        } .do(self.queueOfWashers.enqueue)
     }
 }

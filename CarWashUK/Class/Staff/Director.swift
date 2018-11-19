@@ -9,14 +9,10 @@
 import Foundation
 
 
-class Director: Staff<Accountant> {
+class Director: Manager<Accountant> {
     
-    override func performProcessing(object: Accountant) {
-        self.anyFunc(object)
-    }
-   
     override open func finishProcessing(object accountant: Accountant) {
         self.state = .available
-        print("director i am free i can take profit \(self.money.value) ")
+        print("director i am free i can take profit \(self.money.value)")
     }
 }

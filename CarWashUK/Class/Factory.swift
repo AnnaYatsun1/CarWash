@@ -12,30 +12,25 @@ class Factory: Synchronizable {
     
     let queue = DispatchQueue.background
     let carWash: CarWash
-
-//    var token = Token()
+    let interval: TimeInterval
     
-    deinit {
-        
-    }
-    
-    init(carWash: CarWash) {
+    init(carWash: CarWash, interval: TimeInterval) {
         self.carWash = carWash
+        self.interval = interval
     }
     
     func startMakeCars() {
-
-//        self.token = DispatchQueue.background.timer(interval: 5.0) {
-        10.times {
-            print("make new car")
-//            self.queue.somthing {
-            self.queue.async {
-                let someCar = Car(money: 10, model: "BMW", owner: "Вася")
-                self.carWash.wash(car: someCar)
-//            }
+        //        let token = DispatchQueue.background.asyncAfterRepeating(interval: 4.0, execute: factory.startMakeCars)
+        self.queue.asyncAfterRepeating(interval: interval) {
+            10.times {
+                self.queue.async {
+                    let someCar = Car(money: 10, model: "BMW", owner: "Вася")
+                    self.carWash.wash(car: someCar)
+                }
+            }
+            self.startMakeCars()
         }
     }
-}
 }
 
 

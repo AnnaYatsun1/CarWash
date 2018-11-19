@@ -26,6 +26,5 @@ class Queue<Element> {
         return self.elements.modify {
             $0.safeRemoveFirst()
         }
-    }
-    
+    }    
 }

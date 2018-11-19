@@ -8,15 +8,9 @@
 
 import Foundation
 
-class Accountant: Staff<Washer> {
+class Accountant: Manager<Washer> {
         
     override open func finishProcessing(object washer: Washer) {
-        self.state = .waitProcessing
         print("Accountent am free i can take mone for clien and count \(self.money.value)")
-    }
-    
-    override func performProcessing(object: Washer) {
-
-        self.anyFunc(object)
     }
 }

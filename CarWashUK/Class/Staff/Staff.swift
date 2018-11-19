@@ -9,13 +9,12 @@
 import Foundation
 
 
-class Staff<Processed: MoneGiver >: MoneGiver, MoneyReceiver, Stateble, Synchronizable {
-    
-    
+class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchronizable {
     
     private let id: UInt
     private let queue: DispatchQueue
     private let privateState = Atomic(State.available)
+
     
     let money = Atomic(0)
     let name: String
@@ -47,29 +46,34 @@ class Staff<Processed: MoneGiver >: MoneGiver, MoneyReceiver, Stateble, Synchron
         self.money.modify { $0 += money }
     }
     
-    open func performProcessing(object: Processed) {
-        
-    }
-    
-    open func finishProcessing(object: Processed) {
-        
-    }
-    
-    func doStaffWork(object: Processed, completion: F.Completion?) {
+    @discardableResult
+    func doStaffWork(object: Processing, completion: F.Completion? = nil) -> Processing? {
+        var result: Processing?
+
         self.synchronize {
-            self.state = .busy
-            self.queue.asyncAfter(deadline: .randomDuration()) {
-                self.takeMoney(from: object)
-                self.performProcessing(object: object)
-                self.finishProcessing(object: object)
-                completion?()
+            if self.state == .available {
+                self.state = .busy
+                self.queue.asyncAfter(deadline: .randomDuration()) {
+                    self.state = .waitProcessing
+                    self.doStaffWork(object: object)
+                    self.takeMoney(from: object)
+                    self.performProcessing(object: object)
+                    self.finishProcessing(object: object)
+                    completion?()
+                }
+            } else {
+                result = object
             }
         }
+        
+        return result
     }
-}
-
-extension Staff where Processed: Stateble {
-    func anyFunc(_ object: Processed) -> Void {
-        object.state = .available
+    
+    open func performProcessing(object: Processing) {
+        
+    }
+    
+    open func finishProcessing(object: Processing) {
+        
     }
 }
