@@ -15,10 +15,9 @@ let iterval = TimeInterval(4.0)
 
 let carWash = CarWash(washer: washer, accountant: accountant, director: director)
 let factory = Factory(carWash: carWash, interval: iterval)
-let token = DispatchQueue.background.asyncAfterRepeating(interval: 4.0, execute: factory.startMakeCars)
-
-//sleep(5)
-//token.isRunning.value = false
+factory.startMakeCars()
+sleep(6)
+factory.stop()
 
 RunLoop.current.run()
 

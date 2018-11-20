@@ -11,6 +11,8 @@ import Foundation
 class Queue<Element> {
     
     private var elements = Atomic([Element]())
+    var elementsa = [Element]()
+
 
     var isEmpty: Bool {
         return self.elements.value.isEmpty
@@ -26,5 +28,15 @@ class Queue<Element> {
         return self.elements.modify {
             $0.safeRemoveFirst()
         }
-    }    
+    }
+    
+    func  peek() ->Element?  {
+        return self.elements.transform {
+            $0.first
+        }
+    }
+    func next() -> Element? {
+        let numbersIterator = elements.value.makeIterator()
+        return numbersIterator as? Element
+    }
 }

@@ -14,21 +14,26 @@ class Factory: Synchronizable {
     let carWash: CarWash
     let interval: TimeInterval
     
+    var token: Token?
+    
     init(carWash: CarWash, interval: TimeInterval) {
         self.carWash = carWash
         self.interval = interval
     }
     
     func startMakeCars() {
-        self.queue.asyncAfterRepeating(interval: interval) {
+	        self.token = self.queue.asyncAfterRepeating(interval: interval) {
             10.times {
                 self.queue.async {
                     let someCar = Car(money: 10, model: "BMW", owner: "Вася")
                     self.carWash.wash(car: someCar)
                 }
             }
-//            self.startMakeCars()
         }
+    }
+    
+    func stop() {
+        self.token?.stop()
     }
 }
 

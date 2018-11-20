@@ -16,35 +16,35 @@ extension DispatchQueue {
 }
 
 extension DispatchQueue {
-    
-    @discardableResult
-    func asyncAfterRepeating(interval: TimeInterval, execute: @escaping F.Execute) -> Token {
-        let token = Token.shared  //  default true
-       
-        while token.isRunning {
 
-            self.asyncAfter(deadline: .after(interval: interval)) {
-                    print("11111")
-//                if token.isRunning {
-                    //            self.asyncAfter(deadline: .after(interval: interval)) {
-                    execute()
-                }
-        }
+    func asyncAfterRepeating(
+        interval: TimeInterval,
+        execute: @escaping F.Execute
+    )
+        -> Token
+    {
+        let token = Token()
+        self.nextStep(token: token, interval: interval,execute: execute)
+
         return token
+    }
+
+    private func nextStep(token: Token, interval: TimeInterval,execute: @escaping F.Execute
+        ) {
+     self.asyncAfter(deadline: .after(interval: interval)) {
+            if token.isRunning.value {
+                execute()
+                self.nextStep(token: token, interval: interval, execute: execute)
+            }
+        }
     }
 }
 
-class Token {
+class Token: Synchronizable {
     
-    private(set) var isRunning = true
+    private(set) var isRunning = Atomic(true)
     
     func stop() {
-        self.isRunning = false
-    }
-
-    static let shared = Token()
-    
-    private init() {
-        
+        self.isRunning.value = false
     }
 }

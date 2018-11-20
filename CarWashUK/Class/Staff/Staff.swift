@@ -14,6 +14,8 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
     private let id: UInt
     private let queue: DispatchQueue
     private let privateState = Atomic(State.available)
+//    let washersQueue: Queue<Washer>
+
 
     
     let money = Atomic(0)
@@ -32,6 +34,7 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
         self.id = id
         self.name = name
         self.queue = queue
+//        self.washersQueue = washersQueue
     }
     
     func giveMoney() -> Int {
@@ -67,6 +70,11 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
         }
         
         return result
+    }
+    
+  
+    func forWashers() {
+
     }
     
     open func performProcessing(object: Processing) {
