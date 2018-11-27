@@ -25,6 +25,7 @@
 		3F0878E4218B0DCC002EE9A7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E3218B0DCC002EE9A7 /* main.swift */; };
 		3F0878E6218B0E0B002EE9A7 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E5218B0E0B002EE9A7 /* Int+Extensions.swift */; };
 		3F0878E8218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */; };
+		3F743E0421A56F1100D4560B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F743E0321A56F1100D4560B /* Array.swift */; };
 		3FA208712190416C006F3D1A /* RangeReplaceableCollection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */; };
 		3FA2087B21942A9D006F3D1A /* Synchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087A21942A9D006F3D1A /* Synchronizable.swift */; };
 		3FA2087D21942BCF006F3D1A /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087C21942BCF006F3D1A /* Factory.swift */; };
@@ -65,6 +66,7 @@
 		3F0878E3218B0DCC002EE9A7 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3F0878E5218B0E0B002EE9A7 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
+		3F743E0321A56F1100D4560B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RangeReplaceableCollection+Extension.swift"; sourceTree = "<group>"; };
 		3FA2087A21942A9D006F3D1A /* Synchronizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizable.swift; sourceTree = "<group>"; };
 		3FA2087C21942BCF006F3D1A /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
@@ -122,7 +124,6 @@
 				3F0878E1218AF900002EE9A7 /* Queue.swift */,
 				3FA2087C21942BCF006F3D1A /* Factory.swift */,
 				3FC95C38219EBB78007B1B78 /* Token.swift */,
-				3FC95C3A219ECACB007B1B78 /* Manager.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -132,6 +133,7 @@
 			children = (
 				3F0878BC2189D4E3002EE9A7 /* Staff.swift */,
 				3F0878CE2189DBDD002EE9A7 /* Washer.swift */,
+				3FC95C3A219ECACB007B1B78 /* Manager.swift */,
 				3F0878D72189EF8C002EE9A7 /* Accountant.swift */,
 				3F0878D9218AE611002EE9A7 /* Director.swift */,
 			);
@@ -167,6 +169,7 @@
 				3F0878E5218B0E0B002EE9A7 /* Int+Extensions.swift */,
 				3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */,
 				3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */,
+				3F743E0321A56F1100D4560B /* Array.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				3F0878D12189E064002EE9A7 /* Atomic.swift in Sources */,
 				3F0878CF2189DBDD002EE9A7 /* Washer.swift in Sources */,
 				3F0878DE218AF798002EE9A7 /* CarWash.swift in Sources */,
+				3F743E0421A56F1100D4560B /* Array.swift in Sources */,
 				3F0878E0218AF80B002EE9A7 /* Optional+Extensions.swift in Sources */,
 				3F0878D42189E5BD002EE9A7 /* DispatchTime+Extensions.swift in Sources */,
 				3F0878DC218AF1E4002EE9A7 /* NSLocking+Extensions.swift in Sources */,

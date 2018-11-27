@@ -11,6 +11,8 @@ import Foundation
 class Manager<Processing: MoneGiver & Stateble>: Staff<Processing> {
     
     override func performProcessing(object: Processing) {
+    
+        //  проверить статус бухгалтера
         object.state = .available
     }
 }

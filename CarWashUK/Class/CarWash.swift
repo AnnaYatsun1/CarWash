@@ -10,51 +10,65 @@ import Foundation
 
 class CarWash: Synchronizable {
     
-    let washer: Washer
     let accountant: Accountant
     let director: Director
     
     private let queueCars = Queue<Car>()
-    private let queueOfWashers = Queue<Washer>()
+//    private let queueWashers: Queue<Washer>// free
+    private let washers: [Washer]  //  all washers in a car wash
+    private let washers_: Atomic<[Washer]>
     
     init(
-        washer: Washer,
+        washers: [Washer],
         accountant: Accountant,
         director: Director
-    ) {
-        self.washer = washer
+        ) {
+        self.washers = washers
         self.accountant = accountant
         self.director = director
+        self.washers_ = Atomic(washers)
+//        self.queueWashers = Queue(elements: washers)
+        
     }
     
     func wash(car: Car) {
-        let queueCars = self.queueCars
-        
-        self.synchronize {
-            if self.washer.state == .available {
-                self.process(car: car)
-            } else {
-                queueCars.enqueue(car)
-            }
-        }
+        self.process(car: car)
     }
     
     func process(car: Car) {
-        self.washer.doStaffWork(object: car) {
-            self.countMoney(washer: self.washer)
-        }
-    }
-    
-    func countMoney(washer: Washer) {
-        let accountant = self.accountant
         
-        accountant
-            .doStaffWork(object: washer) {
-                self.queueCars.dequeue().do(self.process)
-                self.director.doStaffWork(object: accountant) {
-                    self.queueOfWashers.dequeue().do(self.countMoney)
+        self.synchronize {
+            let local = washers.filter{ $0.state != .busy }.sorted { $0.objectCount < $1.objectCount  }.first
+            if let worker = local {
+                print("washer \(worker.name), status \(worker.state)")
+                worker.doStaffWork(object: car){
+                    let waitingWashers =  self.washers_.value.filter { $0.state == .waitProcessing}
+                countMoney(washers: waitingWashers)
+                }
+                
+            } else {
+                print("add car to queue")
+                self.queueCars.enqueue(car)
+            }
+        }
+        
+        func countMoney(washers: [Washer]) {
+                washers.forEach { washer in
+                    print("washer \(washer.name), status \(washer.state)")
+                    self.accountant.doStaffWork(object: washer){
+                        print("aqccountent \(self.accountant.name), status \(self.accountant.state)")
+                    self.director.doStaffWork(object: self.accountant) {
+                        print("Take car from queue")
+                        self.queueCars.dequeue().do { car in
+                            self.process(car: car)
+                            print("car \(car.owner)")
+                        }
+                    }
                 }
             }
-            .do(self.queueOfWashers.enqueue)
+        }
     }
 }
+
+
+

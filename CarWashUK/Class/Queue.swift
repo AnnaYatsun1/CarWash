@@ -11,16 +11,23 @@ import Foundation
 class Queue<Element> {
     
     private var elements = Atomic([Element]())
-    var elementsa = [Element]()
-
 
     var isEmpty: Bool {
         return self.elements.value.isEmpty
     }
     
+    var count: Int {
+        return self.elements.value.count
+    }
+    
     func enqueue(_ newElement: Element) {
         self.elements.modify {
             $0.append(newElement)
+        }
+    }
+    func enqueueForOptional(_ newElement: Element?) {
+        newElement.do {
+            self.enqueue($0)
         }
     }
     
@@ -35,8 +42,24 @@ class Queue<Element> {
             $0.first
         }
     }
-    func next() -> Element? {
-        let numbersIterator = elements.value.makeIterator()
-        return numbersIterator as? Element
+    
+    init(elements: [Element]) {
+        self.elements = Atomic(elements)
     }
+    
+    convenience init() {
+        self.init(elements: [Element]())
+    }
+    
+    func element(at index: Int) -> Element {
+        return self.elements.value[index]
+    }
+//    func next() -> Element? {
+//        var numbersIterator = elements.value.makeIterator()
+//        while let num = numbersIterator.next() {
+//           return num
+//        }
+//        
+//        return numbersIterator as? Element
+//    }
 }

@@ -13,8 +13,15 @@ class Factory: Synchronizable {
     let queue = DispatchQueue.background
     let carWash: CarWash
     let interval: TimeInterval
+    let array = ["Frodo", "Sam", "Wise", "Gamgee", " Dima", "Vasay"]
     
-    var token: Token?
+    var token: Token? {
+        willSet { self.stop() }
+    }
+    
+    deinit {
+        self.stop()
+    }
     
     init(carWash: CarWash, interval: TimeInterval) {
         self.carWash = carWash
@@ -22,11 +29,11 @@ class Factory: Synchronizable {
     }
     
     func startMakeCars() {
-	        self.token = self.queue.asyncAfterRepeating(interval: interval) {
-            10.times {
-                self.queue.async {
-                    let someCar = Car(money: 10, model: "BMW", owner: "Вася")
-                    self.carWash.wash(car: someCar)
+	        self.token = self.queue.asyncAfterRepeating(interval: interval) { [weak self] in
+            4.times {
+                self?.queue.async {
+                    let someCar = Car(money: 10, model: "BMW", owner: (self?.array.randomElement()!)!)
+                    self?.carWash.wash(car: someCar)
                 }
             }
         }

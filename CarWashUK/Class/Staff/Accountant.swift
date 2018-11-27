@@ -11,6 +11,10 @@ import Foundation
 class Accountant: Manager<Washer> {
         
     override open func finishProcessing(object washer: Washer) {
+//        washer.state = .waitProcessing
+        super.finishProcessing(object: washer)
         print("Accountent am free i can take mone for clien and count \(self.money.value)")
     }
+    
+    
 }

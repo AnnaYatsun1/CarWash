@@ -34,6 +34,7 @@ class  Car: MoneGiver {
         }
     }
     
+    
     let money: Atomic<Int>
     let model: String
     let owner: String

@@ -14,9 +14,9 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
     private let id: UInt
     private let queue: DispatchQueue
     private let privateState = Atomic(State.available)
-//    let washersQueue: Queue<Washer>
-
-
+    let objects = Queue<Processing>()
+    public var objectCount = 0
+    var completion: F.Completion?
     
     let money = Atomic(0)
     let name: String
@@ -34,7 +34,6 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
         self.id = id
         self.name = name
         self.queue = queue
-//        self.washersQueue = washersQueue
     }
     
     func giveMoney() -> Int {
@@ -49,39 +48,58 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
         self.money.modify { $0 += money }
     }
     
-    @discardableResult
-    func doStaffWork(object: Processing, completion: F.Completion? = nil) -> Processing? {
-        var result: Processing?
-
+    func doStaffWork(object: Processing?, completion: F.Completion? = nil) {
         self.synchronize {
-            if self.state == .available {
+            self.objects.enqueueForOptional(object)
+            
+            if self.state != .busy  {
                 self.state = .busy
-                self.queue.asyncAfter(deadline: .randomDuration()) {
-                    self.state = .waitProcessing
-                    self.doStaffWork(object: object)
-                    self.takeMoney(from: object)
-                    self.performProcessing(object: object)
-                    self.finishProcessing(object: object)
-                    completion?()
+                if let object = self.objects.dequeue() {
+                    self.asyncWork(with: object, completion: completion)
                 }
-            } else {
-                result = object
+                //                       print("\(self) async2222 work \(object),")
+                if self.completion == nil {
+                    self.completion = completion
+                }
             }
+            
         }
-        
-        return result
     }
     
-  
-    func forWashers() {
-
+    
+    private func asyncWork(
+        with object: Processing?,
+        completion:  F.Completion? = nil
+        ) {
+        object.do { objects in
+            self.queue.asyncAfter(deadline: .randomDuration()) {
+                self.takeMoney(from: objects)
+                self.performProcessing(object: objects)
+                self.completeProcessing(object: objects)
+                //
+                self.finishProcessing(object: objects)
+                completion?()
+            }
+        }
     }
     
     open func performProcessing(object: Processing) {
         
     }
     
-    open func finishProcessing(object: Processing) {
+    open func completeProcessing(object: Processing) {
         
+    }
+    
+    open func finishProcessing(object: Processing) {
+        self.synchronize {
+            print("\(self)")
+            if self.objects.isEmpty {
+                print("object is empty, \(self)")
+                self.state = .waitProcessing //  will process in completion
+            } else {
+                self.doStaffWork(object: nil, completion: self.completion)
+            }
+        }
     }
 }
