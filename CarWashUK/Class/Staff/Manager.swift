@@ -10,6 +10,17 @@ import Foundation
 
 class Manager<Processing: MoneGiver & Stateble>: Staff<Processing> {
     
+    override var state: State {
+        willSet {
+            
+            if newValue == .available && self.state == .busy  {
+                self.doStaffWork(object: nil, completion: nil)
+            }
+            
+            super.state = newValue
+        }
+    }
+ 
     override func doStaffWork(object: Processing?, completion: F.Completion?) {
         if let object = object {
             if object.state == .waitProcessing {

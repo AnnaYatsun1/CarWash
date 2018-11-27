@@ -53,9 +53,12 @@ class CarWash: Synchronizable {
     }
     
     func countMoney(washer: Washer?) {
-        self.accountant.doStaffWork(object: washer){
+        print("111")
+        let accountent = self.accountant
+        accountant.doStaffWork(object: washer) {
+            print("account completion ")
             self.washersQueue.enqueueForOptional(washer)
-            print("aqccountent \(self.accountant.name), status \(self.accountant.state)")
+//            print("aqccountent \(self.accountant.name), status \(self.accountant.state)")
             print("Take car from queue")
             self.carsQueue.dequeue().do { car in
                 self.process(car: car)
