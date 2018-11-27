@@ -33,8 +33,7 @@ class  Car: MoneGiver {
             return self == .clean
         }
     }
-    
-    
+
     let money: Atomic<Int>
     let model: String
     let owner: String

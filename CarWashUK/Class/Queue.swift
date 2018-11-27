@@ -26,9 +26,7 @@ class Queue<Element> {
         }
     }
     func enqueueForOptional(_ newElement: Element?) {
-        newElement.do {
-            self.enqueue($0)
-        }
+        newElement.do(self.enqueue)
     }
     
     func dequeue() -> Element? {
@@ -54,12 +52,4 @@ class Queue<Element> {
     func element(at index: Int) -> Element {
         return self.elements.value[index]
     }
-//    func next() -> Element? {
-//        var numbersIterator = elements.value.makeIterator()
-//        while let num = numbersIterator.next() {
-//           return num
-//        }
-//        
-//        return numbersIterator as? Element
-//    }
 }

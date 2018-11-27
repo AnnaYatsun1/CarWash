@@ -14,9 +14,10 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
     private let id: UInt
     private let queue: DispatchQueue
     private let privateState = Atomic(State.available)
-    let objects = Queue<Processing>()
+    private let dispatchQueue = DispatchQueue.background
     public var objectCount = 0
     var completion: F.Completion?
+    private lazy var processedObjects_ = Queue(elements: [(object: Processing?, completion: F.Completion?)]())
     
     let money = Atomic(0)
     let name: String
@@ -50,33 +51,24 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
     
     func doStaffWork(object: Processing?, completion: F.Completion? = nil) {
         self.synchronize {
-            self.objects.enqueueForOptional(object)
             
             if self.state != .busy  {
+                print("in staff busy \(self)")
                 self.state = .busy
-                if let object = self.objects.dequeue() {
-                    self.asyncWork(with: object, completion: completion)
-                }
-                //                       print("\(self) async2222 work \(object),")
-                if self.completion == nil {
-                    self.completion = completion
+                self.asyncWork(object: object, completion: completion)
+                } else {
+                    let objectWithCimpletion = (object: object, completion: completion)
+                    self.processedObjects_.enqueue(objectWithCimpletion)
                 }
             }
-            
         }
-    }
     
-    
-    private func asyncWork(
-        with object: Processing?,
-        completion:  F.Completion? = nil
-        ) {
+    private func asyncWork(object: Processing?, completion: F.Completion? = nil) {
         object.do { objects in
             self.queue.asyncAfter(deadline: .randomDuration()) {
                 self.takeMoney(from: objects)
                 self.performProcessing(object: objects)
                 self.completeProcessing(object: objects)
-                //
                 self.finishProcessing(object: objects)
                 completion?()
             }
@@ -93,13 +85,22 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
     
     open func finishProcessing(object: Processing) {
         self.synchronize {
-            print("\(self)")
-            if self.objects.isEmpty {
-                print("object is empty, \(self)")
-                self.state = .waitProcessing //  will process in completion
-            } else {
-                self.doStaffWork(object: nil, completion: self.completion)
+            print("finishProcessing \(object)")
+            self.doCheking()
+        }
+    }
+    
+    func doCheking() {
+        if let object = self.processedObjects_.dequeue() {
+            self.dispatchQueue.async {
+                self.asyncWork(
+                    object: object.object,
+                    completion: object.completion
+                )
             }
+        } else {
+            self.state = .waitProcessing
         }
     }
 }
+

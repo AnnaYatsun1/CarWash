@@ -10,9 +10,24 @@ import Foundation
 
 class Manager<Processing: MoneGiver & Stateble>: Staff<Processing> {
     
-    override func performProcessing(object: Processing) {
-    
-        //  проверить статус бухгалтера
-        object.state = .available
+    override func doStaffWork(object: Processing?, completion: F.Completion?) {
+        if let object = object {
+            if object.state == .waitProcessing {
+                super.doStaffWork(object: object)
+            }
+        } else {
+            self.doCheking()
+        }
     }
+    
+    override func completeProcessing(object: Processing) {
+        object.state = .busy
+        super .completeProcessing(object: object)
+    }
+    
+    override func performProcessing(object: Processing) {
+        object.state = .available
+        super .performProcessing(object: object)
+    }
+    
 }

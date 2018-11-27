@@ -14,19 +14,27 @@ let washer1 =  Washer(id: 2, name: "Tanay", queue: .background)
 
 
 
-let director = Director(id: 2, name: "Nila", queue: .background)
-let accountant =  Accountant(id: 3, name: "Fima", queue: .background)
-let iterval = 4.0
-let washers = [washer, washer1]
-//let letterCounts = washers.map { $0 }
-//let aPersonArray = washers.flatMap { $0 }.flatMap { $0 }
+//let director = Director(id: 2, name: "Nila", queue: .background)
+//let accountant =  Accountant(id: 3, name: "Fima", queue: .background)
+//let iterval = 4.0
+//let washers = [washer]
+////let letterCounts = washers.map { $0 }
+////let aPersonArray = washers.flatMap { $0 }.flatMap { $0 }
+//
+//let carWash = CarWash(washers: washers, accountant: accountant, director: director)
+//let factory = Factory(carWash: carWash, interval: iterval)
+//factory.startMakeCars()
+//sleep(5)
+//factory.stop()
 
-let carWash = CarWash(washers: washers, accountant: accountant, director: director)
-let factory = Factory(carWash: carWash, interval: iterval)
-factory.startMakeCars()
-sleep(5)
-factory.stop()
+let firstAvalibleWasher = [3,2,1,0,-1,-2].filter{ $0 > 0 }
+    .sorted { $0 < $1 }
+    .first
 
+let one = [3,2,1,0,-1,-2].first { $0 == 1 }
+
+print(one)
+sleep(1000)
 
 
 
