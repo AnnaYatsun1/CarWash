@@ -23,7 +23,7 @@ class Atomic<Value> {
     init(
         _ value: Value,
         lock: NSRecursiveLock = NSRecursiveLock()
-        ) {
+    ) {
         self.mutableValue = value
         self.lock = lock
     }
@@ -36,7 +36,7 @@ class Atomic<Value> {
     
     func modify<Result>(_ action: (inout Value) -> Result) -> Result {
         return self.lock.do {
-            return action(&self.mutableValue)
+            action(&self.mutableValue)
         }
     }
 }

@@ -9,7 +9,6 @@
 import Foundation
 
 enum State{
-    
     case busy
     case available
     case waitProcessing

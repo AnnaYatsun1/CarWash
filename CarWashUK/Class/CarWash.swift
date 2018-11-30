@@ -10,8 +10,8 @@ import Foundation
 
 class CarWash: Synchronizable {
     
-    let accountant: Accountant
-    let director: Director
+    public let accountant: Accountant
+    public let director: Director
     
     private let carsQueue = Queue<Car>()
     private var washersQueue = Queue<Washer>()
@@ -22,7 +22,7 @@ class CarWash: Synchronizable {
         washers: [Washer],
         accountant: Accountant,
         director: Director
-        ) {
+    ) {
         self.washers = washers
         self.accountant = accountant
         self.director = director
@@ -36,36 +36,36 @@ class CarWash: Synchronizable {
     
     func process(car: Car) {
         self.synchronize {
-        let firstAvalibleWasher = washers.filter{ $0.state == .available }
-            .sorted { $0.objectCount < $1.objectCount }
-            .first
-        if let washer = firstAvalibleWasher {
-            washer.doStaffWork(object: car) {
-                print("washer \(washer.name) do staff work")
-   //         let waitingWashers =  self.washers_.value.filter { $0.state == .waitProcessing}
-                self.countMoney(washer: washer)
-            }
-        } else {
-            print("add car to queue")
-            self.carsQueue.enqueue(car)
+            let firstAvalibleWasher = washers.filter { $0.state == .available }
+                .sorted { $0.objectCount < $1.objectCount }
+                .first
+            if let washer = firstAvalibleWasher {
+                washer.doStaffWork(object: car) {
+                   // print("washer \(washer.name) do staff work")
+                    self.countMoney(washer: washer)
+                }
+            } else {
+              //  print("add car to queue")
+                self.carsQueue.enqueue(car)
             }
         }
     }
     
     func countMoney(washer: Washer?) {
-        print("111")
-        let accountent = self.accountant
+        let accountant = self.accountant
+        print("accountent status start  \(accountant.state)")
         accountant.doStaffWork(object: washer) {
-            print("account completion ")
+             print("accountent status in work \(accountant.state)")
+          //  print("account completion ")
             self.washersQueue.enqueueForOptional(washer)
-//            print("aqccountent \(self.accountant.name), status \(self.accountant.state)")
-            print("Take car from queue")
+          //  print("Take car from queue")
             self.carsQueue.dequeue().do { car in
                 self.process(car: car)
-                print("car \(car.owner)")
+              //  print("car \(car.owner)")
             }
+            
             self.director.doStaffWork(object: self.accountant) {
-                print(" its director do work")
+             //   print(" its director do work")
             }
         }
     }

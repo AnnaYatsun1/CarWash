@@ -17,6 +17,15 @@ extension DispatchQueue {
 
 extension DispatchQueue {
 
+    class Token: Synchronizable {
+        
+        let isRunning = Atomic(true)
+        
+        func stop() {
+            self.isRunning.value = false
+        }
+    }
+    
     func asyncAfterRepeating(
         interval: TimeInterval,
         execute: @escaping F.Execute
@@ -40,11 +49,3 @@ extension DispatchQueue {
     }
 }
 
-class Token: Synchronizable {
-    
-    private(set) var isRunning = Atomic(true)
-    
-    func stop() {
-        self.isRunning.value = false
-    }
-}
