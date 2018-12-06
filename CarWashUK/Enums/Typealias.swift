@@ -1,18 +1,16 @@
-
 //
-//  T.swift
+//  Typealias.swift
 //  CarWashUK
 //
-//  Created by Student on 31/10/2018.
+//  Created by Student on 03/12/2018.
 //  Copyright © 2018 Student. All rights reserved.
 //
 
 import Foundation
 
-enum F {
+enum Clouser  {
     
     typealias Completion = () -> ()
     typealias Execute = () -> ()
-    typealias Event = (oldValue: State, newValue: State)
-    typealias ParamCompletion<Value> = (Value) -> ()
+
 }

@@ -25,6 +25,7 @@
 		3F0878E4218B0DCC002EE9A7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E3218B0DCC002EE9A7 /* main.swift */; };
 		3F0878E6218B0E0B002EE9A7 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E5218B0E0B002EE9A7 /* Int+Extensions.swift */; };
 		3F0878E8218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */; };
+		3F1A061B21B6756500D39F31 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A061A21B6756500D39F31 /* Observer.swift */; };
 		3FA208712190416C006F3D1A /* RangeReplaceableCollection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */; };
 		3FA2087B21942A9D006F3D1A /* Synchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087A21942A9D006F3D1A /* Synchronizable.swift */; };
 		3FA2087D21942BCF006F3D1A /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087C21942BCF006F3D1A /* Factory.swift */; };
@@ -64,6 +65,7 @@
 		3F0878E3218B0DCC002EE9A7 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3F0878E5218B0E0B002EE9A7 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
+		3F1A061A21B6756500D39F31 /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RangeReplaceableCollection+Extension.swift"; sourceTree = "<group>"; };
 		3FA2087A21942A9D006F3D1A /* Synchronizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizable.swift; sourceTree = "<group>"; };
 		3FA2087C21942BCF006F3D1A /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				3F0878CC2189DA10002EE9A7 /* MoneyReceiver.swift */,
 				3FA2087A21942A9D006F3D1A /* Synchronizable.swift */,
 				3FA2087E219587ED006F3D1A /* Stateable.swift */,
+				3F1A061A21B6756500D39F31 /* Observer.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				3F0878D82189EF8C002EE9A7 /* Accountant.swift in Sources */,
 				3F0878D62189E831002EE9A7 /* Car.swift in Sources */,
 				3F0878C42189D759002EE9A7 /* F.swift in Sources */,
+				3F1A061B21B6756500D39F31 /* Observer.swift in Sources */,
 				3F0878E2218AF900002EE9A7 /* Queue.swift in Sources */,
 				3F0878CB2189D975002EE9A7 /* MoneyGiver.swift in Sources */,
 				3FA2087B21942A9D006F3D1A /* Synchronizable.swift in Sources */,

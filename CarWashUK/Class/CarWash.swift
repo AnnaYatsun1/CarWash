@@ -8,15 +8,15 @@
 
 import Foundation
 
-class CarWash: Synchronizable {
+class CarWash: Synchronizable, Observer {
     
+    public var id: String
     public let accountant: Accountant
     public let director: Director
     
     private let carsQueue = Queue<Car>()
     private var washersQueue = Queue<Washer>()
-    private let washers: [Washer]  //  all
-    private let washers_: Atomic<[Washer]>
+    private let washers: [Washer]
     
     init(
         washers: [Washer],
@@ -26,8 +26,12 @@ class CarWash: Synchronizable {
         self.washers = washers
         self.accountant = accountant
         self.director = director
-        self.washers_ = Atomic(washers)
         self.washersQueue = Queue(elements: washers)
+        self.id = UUID().uuidString
+        self.accountant.addObserver(observer: self)
+        washers.forEach {
+            $0.addObserver(observer: self)
+        }
     }
     
     func wash(car: Car) {
@@ -35,41 +39,55 @@ class CarWash: Synchronizable {
     }
     
     func process(car: Car) {
-        self.synchronize {
-            let firstAvalibleWasher = washers.filter { $0.state == .available }
-                .sorted { $0.objectCount < $1.objectCount }
-                .first
-            if let washer = firstAvalibleWasher {
-                washer.doStaffWork(object: car) {
-                   // print("washer \(washer.name) do staff work")
-                    self.countMoney(washer: washer)
-                }
-            } else {
-              //  print("add car to queue")
-                self.carsQueue.enqueue(car)
-            }
+        if let washer = self.washersQueue.dequeue(){
+            washer.doStaffWork(object: car)
+        } else {
+            self.carsQueue.enqueue(car)
         }
     }
     
-    func countMoney(washer: Washer?) {
-        let accountant = self.accountant
-        print("accountent status start  \(accountant.state)")
-        accountant.doStaffWork(object: washer) {
-             print("accountent status in work \(accountant.state)")
-          //  print("account completion ")
-            self.washersQueue.enqueueForOptional(washer)
-          //  print("Take car from queue")
-            self.carsQueue.dequeue().do { car in
-                self.process(car: car)
-              //  print("car \(car.owner)")
+    func countMoney(washer: Washer) {
+        self.accountant.doStaffWork(object: washer)
+    }
+    
+    func listen<T>(sender: Staff<T>, info: F.Event) where T : MoneGiver {
+        self.synchronize {
+            if info.newValue == .available {
+                if !sender.chekingForEmpty {
+                    sender.processingQueue()
+                } else {
+                    let washer = sender as? Washer
+                    if let washer = washer {
+                        self.washersQueue.enqueue(washer)
+                        self.carsQueue.dequeue().do { car in
+                            self.process(car: car)
+                        }
+                    }
+                }
             }
             
-            self.director.doStaffWork(object: self.accountant) {
-             //   print(" its director do work")
+            if info.newValue == .waitProcessing {
+                switch sender {
+                case is Washer:
+                    let washer = sender as? Washer
+                    if let washer = washer {
+                        print("  washer case \(info.oldValue) -> \(info.newValue)")
+                        self.accountant.doStaffWork(object: washer)
+                    }
+                case is Accountant:
+                    let accountant = sender as? Accountant
+                    if let accountant = accountant {
+                        print(" accountant  case \(info.oldValue) -> \(info.newValue)")
+                        self.director.doStaffWork(object: accountant)
+                    }
+                case is Director:
+                    print("  director  case \(info.oldValue) -> \(info.newValue)")
+                    break
+                default:
+                    break
+                }
             }
         }
     }
 }
-
-
 

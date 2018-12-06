@@ -9,30 +9,41 @@
 import Foundation
 
 
-class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchronizable {
+class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchronizable, Observable {
     
-    public var completion: F.Completion?
+    struct  WeekObserver {
+        weak var value: Observer?
+    }
+    
     public var objectCount = 0
     public let money = Atomic(0)
     public let name: String
+    public var completion: F.ParamCompletion<Processing>?
+    public var state: State {
+        get { return self.privateState.value }
+        set {
+            let oldValue = self.privateState.value
+            self.privateState.value = newValue
+            self.notify(event: (oldValue: oldValue, newValue: newValue))
+        }
+    }
     
-    private let id: UInt
+    var chekingForEmpty: Bool {
+        return self.processedObjects.isEmpty
+    }
+    
+    private let id: String = NSUUID.init().uuidString
     private let queue: DispatchQueue
     private let privateState = Atomic(State.available)
     private let dispatchQueue = DispatchQueue.background
-    private var objectInProses = Queue(elements: [(object: Processing?, completion: F.Completion?)]())
+    private let processedObjects = Queue(elements: [Processing]())
+    private var observers = [String : WeekObserver]()
     
-    var state: State {
-        get { return self.privateState.value }
-        set { self.privateState.value = newValue }
-    }
-    
-    init(id: UInt, name: String, queue: DispatchQueue = .background) {
-        self.id = id
+    init( name: String, queue: DispatchQueue = .background) {
         self.name = name
         self.queue = queue
     }
-    
+ 
     func giveMoney() -> Int {
         return self.money.modify { money in
             defer { money = 0 }
@@ -41,65 +52,68 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
         }
     }
     
-    var chekingForEmpty: Bool {
-        return self.objectInProses.isEmpty
-    }
-    
     func takeMoney(_ money: Int) {
         self.money.modify { $0 += money }
     }
     
-    func doStaffWork(object: Processing?, completion: F.Completion? = nil) {
+    func doStaffWork(object: Processing) {
         self.synchronize {
-            self.completion = completion
             if self.state == .available {
-//                print("in staff busy \(self)")
                 self.state = .busy
-                self.asyncWork(object: object, completion: completion)
+                self.asyncWork(object)
             } else {
-                let objectWithCimpletion = (object: object, completion: 	completion)
-                self.objectInProses.enqueue(objectWithCimpletion)
+                self.processedObjects.enqueue(object)
             }
         }
     }
     
-    private func asyncWork(object: Processing?, completion: F.Completion? = nil) {
-        object.do { objects in
-            self.queue.asyncAfter(deadline: .randomDuration()) {
-                self.takeMoney(from: objects)
-                self.performProcessing(object: objects)
-                self.completeProcessing(object: objects)
-                self.finishProcessing(object: objects)
-                completion?()
-            }
+    private func asyncWork(_ object: Processing) {
+        self.queue.asyncAfter(deadline: .randomDuration()) {
+            self.takeMoney(from: object)
+            self.performProcessing(object: object)
+            self.completeProcessing(object: object)
+            self.finishProcessing()
         }
     }
     
     open func performProcessing(object: Processing) {
-//        print("perfom prosessng")
+        
     }
     
     open func completeProcessing(object: Processing) {
-//        print("completeProcessing")
+        
     }
     
-    open func finishProcessing(object: Processing) {
-//        print("finishProcessing \(object)")
+    open func finishProcessing() {
         self.processingQueue()
     }
     
     func processingQueue() {
         self.synchronize {
-            if let object = self.objectInProses.dequeue() {
-                self.dispatchQueue.async {
-                    self.asyncWork(
-                        object: object.object,
-                        completion: object.completion
-                    )
-                }
+            if let object = self.processedObjects.dequeue() {
+                self.asyncWork(object)
             } else {
-//                print("wait prosessing in cheking \(self)")
                 self.state = .waitProcessing
+            }
+        }
+    }
+    
+    func addObserver(observer: Observer) {
+         self.observers[observer.id] = WeekObserver(value: observer)
+    }
+    
+    func removeObserver(observer: Observer) {
+        self.observers.removeValue(forKey: observer.id)
+    }
+    
+    func notify(event: F.Event) {
+        self.synchronize {
+            for (key, value) in observers {
+                if let observer = value.value {
+                    observer.listen(sender: self, info: event)
+                } else {
+                    self.observers.removeValue(forKey: key)
+                }
             }
         }
     }

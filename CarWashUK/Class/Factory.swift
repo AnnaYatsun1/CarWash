@@ -15,7 +15,7 @@ class Factory: Synchronizable {
     let interval: TimeInterval
 
     var token: DispatchQueue.Token? {
-        willSet { self.stop() }
+        willSet { self.token?.stop() }
     }
     
     deinit {
@@ -29,7 +29,7 @@ class Factory: Synchronizable {
     
     func startMakeCars() {
 	        self.token = self.queue.asyncAfterRepeating(interval: interval) { [weak self] in
-                10.times {
+                6.times {
                     self?.queue.async {
                         let someCar = Car(money: 10, model: "BMW", owner: "Вася")
                         self?.carWash.wash(car: someCar)
@@ -37,9 +37,9 @@ class Factory: Synchronizable {
             }
         }
     }
-    
+
     func stop() {
-        self.token?.stop()
+        self.token = nil
     }
 }
 

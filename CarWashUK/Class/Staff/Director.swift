@@ -11,7 +11,7 @@ import Foundation
 
 class Director: Manager<Accountant> {
     
-    override open func finishProcessing(object accountant: Accountant) {
+    override open func finishProcessing() {
         self.state = .available
         print("director i am free i can take profit \(self.money.value)")
     }

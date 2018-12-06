@@ -11,7 +11,7 @@ import Foundation
 class Washer: Staff<Car> {
     
   override open func performProcessing(object: Car) {
-        print("\(self.name) washer am free i can wash you'r car \(self.money.value)")
+        print("\(self.name) washer am free i can wash you'r car \(self.money.value), \(self.state)")
         object.state = .clean
     }
 }
