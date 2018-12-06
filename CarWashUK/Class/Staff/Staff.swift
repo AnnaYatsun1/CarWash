@@ -89,12 +89,10 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
     }
     
     func processingQueue() {
-        self.synchronize {
-            if let object = self.processedObjects.dequeue() {
-                self.asyncWork(object)
-            } else {
-                self.state = .waitProcessing
-            }
+        if let object = self.processedObjects.dequeue() {
+            self.asyncWork(object)
+        } else {
+            self.state = .waitProcessing
         }
     }
     
@@ -107,13 +105,11 @@ class Staff<Processing: MoneGiver>: MoneGiver, MoneyReceiver, Stateble, Synchron
     }
     
     func notify(event: F.Event) {
-        self.synchronize {
-            for (key, value) in observers {
-                if let observer = value.value {
-                    observer.listen(sender: self, info: event)
-                } else {
-                    self.observers.removeValue(forKey: key)
-                }
+        for (key, value) in observers {
+            if let observer = value.value {
+                observer.listen(sender: self, info: event)
+            } else {
+                self.observers.removeValue(forKey: key)
             }
         }
     }

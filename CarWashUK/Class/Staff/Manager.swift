@@ -10,14 +10,6 @@ import Foundation
 
 class Manager<Processing: MoneGiver & Stateble>: Staff<Processing> {
     
-    override func doStaffWork(object: Processing) {
-        self.synchronize {
-            if object.state == .waitProcessing {
-                super.doStaffWork(object: object)
-            }
-        }
-    }
-
     override func completeProcessing(object: Processing) {
         object.state = .available
         super.completeProcessing(object: object)

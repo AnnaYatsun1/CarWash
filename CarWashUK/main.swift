@@ -20,7 +20,7 @@ let washers = [washer1, washer2]
 let carWash = CarWash(washers: washers, accountant: accountant, director: director)
 let factory = Factory(carWash: carWash, interval: interval)
 factory.startMakeCars()
-sleep(5)
+//sleep(11)
 //factory.stop()
 RunLoop.current.run()
 

@@ -56,8 +56,7 @@ class CarWash: Synchronizable, Observer {
                 if !sender.chekingForEmpty {
                     sender.processingQueue()
                 } else {
-                    let washer = sender as? Washer
-                    if let washer = washer {
+                    if let washer = sender as? Washer {
                         self.washersQueue.enqueue(washer)
                         self.carsQueue.dequeue().do { car in
                             self.process(car: car)
@@ -69,14 +68,12 @@ class CarWash: Synchronizable, Observer {
             if info.newValue == .waitProcessing {
                 switch sender {
                 case is Washer:
-                    let washer = sender as? Washer
-                    if let washer = washer {
+                    if let washer = sender as? Washer {
                         print("  washer case \(info.oldValue) -> \(info.newValue)")
                         self.accountant.doStaffWork(object: washer)
                     }
                 case is Accountant:
-                    let accountant = sender as? Accountant
-                    if let accountant = accountant {
+                    if let accountant = sender as? Accountant {
                         print(" accountant  case \(info.oldValue) -> \(info.newValue)")
                         self.director.doStaffWork(object: accountant)
                     }
