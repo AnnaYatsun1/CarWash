@@ -19,7 +19,6 @@ class Atomic<Value> {
     private var mutableValue: Value
     private let lock: NSRecursiveLock
     
-
     init(
         _ value: Value,
         lock: NSRecursiveLock = NSRecursiveLock()
