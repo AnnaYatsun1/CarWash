@@ -29,13 +29,16 @@ class Atomic<Value> {
   
     func transform<Result>(_ action: (Value) -> Result) -> Result {
         return self.lock.do {
-            action(self.mutableValue)
+//            print("transform \(mutableValue)")
+            return action(self.mutableValue)
         }
     }
     
     func modify<Result>(_ action: (inout Value) -> Result) -> Result {
         return self.lock.do {
-            action(&self.mutableValue)
+//            print("modify \(mutableValue)")
+
+            return action(&self.mutableValue)
         }
     }
 }

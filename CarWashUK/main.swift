@@ -7,27 +7,27 @@
 ////
 //
 import Foundation
-//
-let washer1 =  Washer(name: "Lika", queue: .background)
-let washer2 =  Washer(name: "Tanay", queue: .background)
-let washer3 =  Washer( name: "Lika", queue: .background)
 
+let washer1 =  Washer(name: "Lika")
+let washer2 =  Washer(name: "Tanay")
+let washer3 =  Washer( name: "Lika")
+////
 let director = Director(name: "Nila")
 let accountant =  Accountant(name: "Fima")
 let interval = 4.0
-let washers = [washer1, washer2]
-
+let washers = [washer1]
+////
 let carWash = CarWash(washers: washers, accountant: accountant, director: director)
 let factory = Factory(carWash: carWash, interval: interval)
 factory.startMakeCars()
-//sleep(11)
-//factory.stop()
-RunLoop.current.run()
-
-
-
-
-
+//////sleep(11)
+//////factory.stop()
+////RunLoop.current.run()
+//
+//
+//
+//
+//
 
 
 

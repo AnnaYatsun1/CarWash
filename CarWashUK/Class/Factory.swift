@@ -32,7 +32,7 @@ class Factory: Synchronizable {
                 10.times {
                     self?.queue.async {
                         let someCar = Car(money: 10, model: "BMW", owner: "Вася")
-                        self?.carWash.wash(car: someCar)
+                        self?.carWash.process(car: someCar)
                 }
             }
         }

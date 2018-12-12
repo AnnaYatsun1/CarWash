@@ -6,9 +6,7 @@
 //  Copyright © 2018 Student. All rights reserved.
 //
 
-import Foundation
-
 protocol Stateble: class {
  
-    var state : State { get set }
+    var state : Emploee.State { get set }
 }

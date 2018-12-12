@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CarWash: Synchronizable, Observer {
+class CarWash: Synchronizable {
     
     public var id: String
     public let accountant: Accountant
@@ -17,26 +17,25 @@ class CarWash: Synchronizable, Observer {
     private let carsQueue = Queue<Car>()
     private var washersQueue = Queue<Washer>()
     private let washers: [Washer]
+    private var observers = [Emploee.Observer]()
     
+//    deinit {
+//        self.observers.cancel()
+//    }
     init(
         washers: [Washer],
         accountant: Accountant,
         director: Director
     ) {
+        defer { self.setup() }
         self.washers = washers
         self.accountant = accountant
         self.director = director
         self.washersQueue = Queue(elements: washers)
         self.id = UUID().uuidString
-        self.accountant.addObserver(observer: self)
-        washers.forEach {
-            $0.addObserver(observer: self)
-        }
+ 
     }
     
-    func wash(car: Car) {
-        self.process(car: car)
-    }
     
     func process(car: Car) {
         if let washer = self.washersQueue.dequeue(){
@@ -46,45 +45,46 @@ class CarWash: Synchronizable, Observer {
         }
     }
     
-    func countMoney(washer: Washer) {
-        self.accountant.doStaffWork(object: washer)
-    }
-    
-    func listen<T>(sender: Staff<T>, info: F.Event) where T : MoneGiver {
-        self.synchronize {
-            if info.newValue == .available {
-                if !sender.chekingForEmpty {
-                    sender.processingQueue()
-                } else {
-                    if let washer = sender as? Washer {
-                        self.washersQueue.enqueue(washer)
-                        self.carsQueue.dequeue().do { car in
-                            self.process(car: car)
+     func setup() {
+        self.washers.forEach { washer in
+            weak var weakWasher = washer
+            
+            let washerObserver = washer.observer { [weak self] state in
+                    switch state {
+                    case .available:
+                        print("case available")
+                        weakWasher.do { unwrappedWasher in
+                            let car = self?.carsQueue.dequeue()
+                            car.do {
+                                unwrappedWasher.doStaffWork(object: $0)
+                            }
                         }
+                        
+//                        self?.carsQueue.dequeue().apply(weakWasher?.doStaffWork)
+                    case .waitProcessing: //return
+                        print("case waitProcessing")
+                        weakWasher.do { self?.accountant.doStaffWork(object: $0) }
+//                        washer.apply(self?.accountant.doStaffWork)
+                    case .busy: return
                     }
                 }
+            
+                self.observers.append(washerObserver)
             }
             
-            if info.newValue == .waitProcessing {
-                switch sender {
-                case is Washer:
-                    if let washer = sender as? Washer {
-                        print("  washer case \(info.oldValue) -> \(info.newValue)")
-                        self.accountant.doStaffWork(object: washer)
-                    }
-                case is Accountant:
-                    if let accountant = sender as? Accountant {
-                        print(" accountant  case \(info.oldValue) -> \(info.newValue)")
-                        self.director.doStaffWork(object: accountant)
-                    }
-                case is Director:
-                    print("  director  case \(info.oldValue) -> \(info.newValue)")
-                    break
-                default:
-                    break
+        let accountantObserver = self.accountant.observer { [weak self] in
+                switch $0 {
+                case .available: return
+                case .waitProcessing: //return
+                    (self?.accountant).apply(self?.director.doStaffWork)
+                case .busy: return
                 }
             }
-        }
+
+        self.observers.append(accountantObserver)
     }
+
 }
+
+
 

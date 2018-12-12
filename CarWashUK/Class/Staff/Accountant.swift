@@ -9,7 +9,7 @@
 import Foundation
 
 class Accountant: Manager<Washer> {
-    
+//
     override open func finishProcessing() {
         super.finishProcessing()
         print("Accountent am free i can take mone for clien and count \(self.money.value), \(self.state)")
