@@ -18,36 +18,25 @@ class  Emploee: MoneGiver, Stateble, MoneyReceiver {
     
     public let name: String
     public let money = Atomic(0)
-    let atomicState = Atomic(State.available)
+    public let atomicState = Atomic(State.available)
+    public let atomicObservers = Atomic([Observer]())
+    
+    public init(name: String) {
+        self.name = name
+    }
     
     public var state: State {
-        get {
-            print("employee state getter")
-            return atomicState.value }
+        get { return atomicState.value }
         set {
-            print("employee state setter")
             self.atomicState.modify {
                 let oldValue = $0
                 if oldValue != newValue {
                     $0 = newValue
+                    DispatchQueue.background.async{
                     self.notify(state: newValue)
+                    }
                 }
             }
-            
-//    public var state: State {
-//        get { return atomicState.value }
-//        set {
-//            self.atomicState.modify {
-//                let oldValue = $0
-//                if oldValue != newValue {
-//                    $0 = newValue
-//                    self.notify(state: newValue)
-//                }
-//            }
-//        }
-        
-//
-//        }
         }
     }
     
@@ -62,17 +51,32 @@ class  Emploee: MoneGiver, Stateble, MoneyReceiver {
     func takeMoney(_ money: Int) {
         self.money.modify { $0 += money }
     }
-    public init(name: String) {
-        self.name = name
+    
+    func observer(handler: @escaping Observer.Handler) -> Observer {
+        return self.atomicObservers.modify {
+            let observer = Observer(emploee: self, hendler: handler)
+            $0.append(observer)
+            observer.handler(self.state)
+            return observer
+        }
+    }
+
+    func notify(state: State) {
+        self.atomicObservers.modify { observers in
+            observers = observers.filter { $0.isObserving }
+            observers.forEach {
+                $0.handler(state)
+            }
+        }
     }
     
-    let atomicObservers = Atomic([Observer]())
-
     public class Observer: Hashable {
-        public typealias Handler = (State) -> ()
+        typealias Handler = (State) -> ()
+        
         let handler: Handler
+        
         private weak var emploee: Emploee?
-     
+        
         init(emploee: Emploee?, hendler: @escaping Handler) {
             self.handler = hendler
             self.emploee = emploee
@@ -94,26 +98,5 @@ class  Emploee: MoneGiver, Stateble, MoneyReceiver {
             return lhs === rhs
         }
     }
-    
-    func observer(handler: @escaping Observer.Handler) -> Observer {
-        return self.atomicObservers.modify {
-            let observer = Observer(emploee: self, hendler: handler)
-            $0.append(observer)
-//            observer.hendler(self.state)
-            return observer
-        }
-    }
-
-    func notify(state: State) {
-        self.atomicObservers.modify { observers in
-//            observers = observers.filter { $0.isObserving}
-//            print("observers count \(self.atomicObservers.value.count)")
-            print("notify")
-            observers.forEach {
-                $0.handler(state)
-            }
-        }
-    }
-    
 }
 

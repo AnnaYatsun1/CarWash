@@ -15,14 +15,14 @@ let washer3 =  Washer( name: "Lika")
 let director = Director(name: "Nila")
 let accountant =  Accountant(name: "Fima")
 let interval = 4.0
-let washers = [washer1]
+let washers = [washer1, washer2]
 ////
 let carWash = CarWash(washers: washers, accountant: accountant, director: director)
 let factory = Factory(carWash: carWash, interval: interval)
 factory.startMakeCars()
 //////sleep(11)
 //////factory.stop()
-////RunLoop.current.run()
+RunLoop.current.run()
 //
 //
 //

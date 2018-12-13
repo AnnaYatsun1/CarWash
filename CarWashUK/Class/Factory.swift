@@ -28,11 +28,11 @@ class Factory: Synchronizable {
     }
     
     func startMakeCars() {
-	        self.token = self.queue.asyncAfterRepeating(interval: interval) { [weak self] in
-                10.times {
-                    self?.queue.async {
-                        let someCar = Car(money: 10, model: "BMW", owner: "Вася")
-                        self?.carWash.process(car: someCar)
+        self.token = self.queue.asyncAfterRepeating(interval: interval) { [weak self] in
+            10.times {
+                self?.queue.async {
+                    let someCar = Car(money: 10, model: "BMW", owner: "Вася")
+                    self?.carWash.process(car: someCar)
                 }
             }
         }

@@ -17,7 +17,7 @@ extension DispatchQueue {
 
 extension DispatchQueue {
 
-    class Token: Synchronizable {
+    class Token {
         
         let isRunning = Atomic(true)
         
@@ -38,8 +38,11 @@ extension DispatchQueue {
         return token
     }
 
-    private func nextStep(token: Token, interval: TimeInterval,execute: @escaping F.Execute
-        ) {
+    private func nextStep(
+        token: Token,
+        interval: TimeInterval,
+        execute: @escaping F.Execute
+    ) {
      self.asyncAfter(deadline: .after(interval: interval)) {
             if token.isRunning.value {
                 execute()

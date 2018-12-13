@@ -11,17 +11,17 @@ import Foundation
 
 class Staff<Processing: MoneGiver>: Emploee, Synchronizable {
     
-
     public var objectCount = 0
     public var completion: F.ParamCompletion<Processing>?
+    
+    private let queue = DispatchQueue.background
+    private let processedObjects = Queue(elements: [Processing]())
+    
     override public var state: State {
-        get {
-            print("staff state getter")
-            return super.state }
+        get { return super.state }
         set {
-            print("staff state setter")
             if newValue == .available && self.state == .busy && !self.chekingForEmpty {
-                self.processingQueue()
+                self.restartIfNeeded()
             } else {
                 super.state = newValue
             }
@@ -32,24 +32,15 @@ class Staff<Processing: MoneGiver>: Emploee, Synchronizable {
         return self.processedObjects.isEmpty
     }
     
-    private let queue = DispatchQueue.background
-    private let processedObjects = Queue(elements: [Processing]())
-
-    
     func doStaffWork(object: Processing) {
-//        self.synchronize {
-        self.queue.sync {
-            let isAvailable = (self.state == .available)
-            
-            if isAvailable {
+        self.synchronize {
+            if self.state == .available {
                 self.state = .busy
                 self.asyncWork(object)
             } else {
                 self.processedObjects.enqueue(object)
             }
         }
-        
-//        }
     }
     
     private func asyncWork(_ object: Processing) {
@@ -70,11 +61,11 @@ class Staff<Processing: MoneGiver>: Emploee, Synchronizable {
     }
     
     open func finishProcessing() {
-        self.processingQueue()
+        self.restartIfNeeded()
     }
     
-    func processingQueue() {
-        self.queue.sync {
+    func restartIfNeeded() {
+        self.synchronize {
             if let object = self.processedObjects.dequeue() {
                 self.asyncWork(object)
             } else {

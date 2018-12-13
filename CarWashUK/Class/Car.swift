@@ -10,17 +10,6 @@ import Foundation
 
 class  Car: MoneGiver {
     
-    private let privateState = Atomic(Status.dirty)
-
-    var state: Status {
-        get {
-            return self.privateState.value
-        }
-        set {
-            self.privateState.modify { $0 = newValue }
-        }
-    }
-
     enum Status: String {
         case clean
         case dirty
@@ -33,10 +22,21 @@ class  Car: MoneGiver {
             return self == .clean
         }
     }
-
+    
+    private let privateState = Atomic(Status.dirty)
+    
     let money: Atomic<Int>
     let model: String
     let owner: String
+
+    var state: Status {
+        get {
+            return self.privateState.value
+        }
+        set {
+            self.privateState.modify { $0 = newValue }
+        }
+    }
     
     init(
         money: Int,

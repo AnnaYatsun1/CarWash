@@ -11,6 +11,14 @@ import Foundation
 class Queue<Element> {
     
     private var elements = Atomic([Element]())
+    
+    init(elements: [Element]) {
+        self.elements = Atomic(elements)
+    }
+    
+    convenience init() {
+        self.init(elements: [Element]())
+    }
 
     var isEmpty: Bool {
         return self.elements.value.isEmpty
@@ -25,9 +33,6 @@ class Queue<Element> {
             $0.append(newElement)
         }
     }
-    func enqueueForOptional(_ newElement: Element?) {
-        newElement.do(self.enqueue)
-    }
     
     func dequeue() -> Element? {
         return self.elements.modify {
@@ -39,17 +44,5 @@ class Queue<Element> {
         return self.elements.transform {
             $0.first
         }
-    }
-    
-    init(elements: [Element]) {
-        self.elements = Atomic(elements)
-    }
-    
-    convenience init() {
-        self.init(elements: [Element]())
-    }
-    
-    func element(at index: Int) -> Element {
-        return self.elements.value[index]
     }
 }

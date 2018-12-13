@@ -19,23 +19,24 @@ class CarWash: Synchronizable {
     private let washers: [Washer]
     private var observers = [Emploee.Observer]()
     
-//    deinit {
-//        self.observers.cancel()
-//    }
+    deinit {
+        self.observers.forEach {
+            $0.cancel()
+        }
+    }
+    
     init(
         washers: [Washer],
         accountant: Accountant,
         director: Director
     ) {
-        defer { self.setup() }
         self.washers = washers
         self.accountant = accountant
         self.director = director
         self.washersQueue = Queue(elements: washers)
         self.id = UUID().uuidString
- 
+        self.setup()
     }
-    
     
     func process(car: Car) {
         if let washer = self.washersQueue.dequeue(){
@@ -45,45 +46,33 @@ class CarWash: Synchronizable {
         }
     }
     
-     func setup() {
+    func setup() {
         self.washers.forEach { washer in
             weak var weakWasher = washer
-            
             let washerObserver = washer.observer { [weak self] state in
-                    switch state {
+                switch state {
                     case .available:
-                        print("case available")
-                        weakWasher.do { unwrappedWasher in
-                            let car = self?.carsQueue.dequeue()
-                            car.do {
-                                unwrappedWasher.doStaffWork(object: $0)
-                            }
-                        }
-                        
-//                        self?.carsQueue.dequeue().apply(weakWasher?.doStaffWork)
-                    case .waitProcessing: //return
-                        print("case waitProcessing")
-                        weakWasher.do { self?.accountant.doStaffWork(object: $0) }
-//                        washer.apply(self?.accountant.doStaffWork)
+                    self?.carsQueue.dequeue().apply(weakWasher?.doStaffWork)
+                    case .waitProcessing:
+                    weakWasher.do { self?.accountant.doStaffWork(object: $0) }
                     case .busy: return
                     }
-                }
-            
-                self.observers.append(washerObserver)
             }
             
+            self.observers.append(washerObserver)
+        }
+        
         let accountantObserver = self.accountant.observer { [weak self] in
-                switch $0 {
+            switch $0 {
                 case .available: return
-                case .waitProcessing: //return
-                    (self?.accountant).apply(self?.director.doStaffWork)
+                case .waitProcessing:
+                (self?.accountant).apply(self?.director.doStaffWork)
                 case .busy: return
-                }
             }
-
+        }
+        
         self.observers.append(accountantObserver)
     }
-
 }
 
 

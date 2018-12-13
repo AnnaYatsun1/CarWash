@@ -10,6 +10,11 @@ import Foundation
 
 class Manager<Processing: MoneGiver & Stateble>: Staff<Processing> {
     
+    override func performProcessing(object: Processing) {
+        object.state = .busy
+        super.performProcessing(object: object)
+    }
+    
     override func completeProcessing(object: Processing) {
         object.state = .available
         super.completeProcessing(object: object)
