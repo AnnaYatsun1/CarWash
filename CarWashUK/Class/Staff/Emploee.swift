@@ -32,8 +32,8 @@ class  Emploee: MoneGiver, Stateble, MoneyReceiver {
                 let oldValue = $0
                 if oldValue != newValue {
                     $0 = newValue
-                    DispatchQueue.background.async{
-                    self.notify(state: newValue)
+                    DispatchQueue.background.async {
+                        self.notify(state: newValue)
                     }
                 }
             }
@@ -71,6 +71,7 @@ class  Emploee: MoneGiver, Stateble, MoneyReceiver {
     }
     
     public class Observer: Hashable {
+        
         typealias Handler = (State) -> ()
         
         let handler: Handler

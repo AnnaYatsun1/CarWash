@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class Atomic<Value> {
     
     public var value: Value {
@@ -29,15 +28,13 @@ class Atomic<Value> {
   
     func transform<Result>(_ action: (Value) -> Result) -> Result {
         return self.lock.do {
-//            print("transform \(mutableValue)")
             return action(self.mutableValue)
         }
     }
     
     func modify<Result>(_ action: (inout Value) -> Result) -> Result {
         return self.lock.do {
-//            print("modify \(mutableValue)")
-
+            
             return action(&self.mutableValue)
         }
     }

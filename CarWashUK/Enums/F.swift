@@ -13,7 +13,6 @@ enum F {
     
     typealias Completion = () -> ()
     typealias Execute = () -> ()
-//    typealias Event = (oldValue: State, newValue: State)
     typealias ParamCompletion<Value> = (Value) -> ()
-//    typealias Hendler = (Emploee.State) -> ()
+
 }

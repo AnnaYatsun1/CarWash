@@ -40,7 +40,7 @@ class Queue<Element> {
         }
     }
     
-    func  peek() ->Element?  {
+    func  peek() -> Element? {
         return self.elements.transform {
             $0.first
         }

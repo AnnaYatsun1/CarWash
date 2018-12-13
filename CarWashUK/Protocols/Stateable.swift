@@ -8,5 +8,5 @@
 
 protocol Stateble: class {
  
-    var state : Emploee.State { get set }
+    var state: Emploee.State { get set }
 }

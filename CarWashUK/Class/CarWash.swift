@@ -39,7 +39,7 @@ class CarWash: Synchronizable {
     }
     
     func process(car: Car) {
-        if let washer = self.washersQueue.dequeue(){
+        if let washer = self.washersQueue.dequeue() {
             washer.doStaffWork(object: car)
         } else {
             self.carsQueue.enqueue(car)
