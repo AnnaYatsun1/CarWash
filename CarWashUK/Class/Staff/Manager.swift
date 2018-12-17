@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Manager<Processing: MoneGiver & Stateble>: Staff<Processing> {
+class Manager<Processing: MoneyGiver & Stateble>: Staff<Processing> {
     
     override func performProcessing(object: Processing) {
         object.state = .busy

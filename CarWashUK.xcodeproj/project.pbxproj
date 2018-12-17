@@ -24,7 +24,10 @@
 		3F0878E4218B0DCC002EE9A7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E3218B0DCC002EE9A7 /* main.swift */; };
 		3F0878E6218B0E0B002EE9A7 /* Strideable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E5218B0E0B002EE9A7 /* Strideable+Extensions.swift */; };
 		3F0878E8218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */; };
-		3F1A064921BFD58A00D39F31 /* Emploee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A064821BFD58A00D39F31 /* Emploee.swift */; };
+		3F1A064921BFD58A00D39F31 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A064821BFD58A00D39F31 /* Employee.swift */; };
+		3F75896021C7A85D00F06526 /* ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75895F21C7A85D00F06526 /* ObservableObject.swift */; };
+		3F75896221C7B33D00F06526 /* ObservableObject+Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75896121C7B33D00F06526 /* ObservableObject+Observer.swift */; };
+		3F75896421C7D09E00F06526 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75896321C7D09E00F06526 /* Weak.swift */; };
 		3FA208712190416C006F3D1A /* RangeReplaceableCollection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */; };
 		3FA2087B21942A9D006F3D1A /* Synchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087A21942A9D006F3D1A /* Synchronizable.swift */; };
 		3FA2087D21942BCF006F3D1A /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087C21942BCF006F3D1A /* Factory.swift */; };
@@ -63,7 +66,10 @@
 		3F0878E3218B0DCC002EE9A7 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3F0878E5218B0E0B002EE9A7 /* Strideable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Strideable+Extensions.swift"; sourceTree = "<group>"; };
 		3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
-		3F1A064821BFD58A00D39F31 /* Emploee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emploee.swift; sourceTree = "<group>"; };
+		3F1A064821BFD58A00D39F31 /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
+		3F75895F21C7A85D00F06526 /* ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableObject.swift; sourceTree = "<group>"; };
+		3F75896121C7B33D00F06526 /* ObservableObject+Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableObject+Observer.swift"; sourceTree = "<group>"; };
+		3F75896321C7D09E00F06526 /* Weak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
 		3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RangeReplaceableCollection+Extension.swift"; sourceTree = "<group>"; };
 		3FA2087A21942A9D006F3D1A /* Synchronizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizable.swift; sourceTree = "<group>"; };
 		3FA2087C21942BCF006F3D1A /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
@@ -103,7 +109,7 @@
 			children = (
 				3F0878D22189E598002EE9A7 /* Extension */,
 				3F0878C72189D91E002EE9A7 /* Protocols */,
-				3F0878C02189D70A002EE9A7 /* Enums */,
+				3F0878C02189D70A002EE9A7 /* Type */,
 				3F0878BE2189D6EF002EE9A7 /* Class */,
 				3F0878E3218B0DCC002EE9A7 /* main.swift */,
 			);
@@ -119,6 +125,7 @@
 				3F0878DD218AF798002EE9A7 /* CarWash.swift */,
 				3F0878E1218AF900002EE9A7 /* Queue.swift */,
 				3FA2087C21942BCF006F3D1A /* Factory.swift */,
+				3F75895F21C7A85D00F06526 /* ObservableObject.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -126,7 +133,7 @@
 		3F0878BF2189D6FA002EE9A7 /* Staff */ = {
 			isa = PBXGroup;
 			children = (
-				3F1A064821BFD58A00D39F31 /* Emploee.swift */,
+				3F1A064821BFD58A00D39F31 /* Employee.swift */,
 				3F0878BC2189D4E3002EE9A7 /* Staff.swift */,
 				3F0878CE2189DBDD002EE9A7 /* Washer.swift */,
 				3FC95C3A219ECACB007B1B78 /* Manager.swift */,
@@ -136,12 +143,13 @@
 			path = Staff;
 			sourceTree = "<group>";
 		};
-		3F0878C02189D70A002EE9A7 /* Enums */ = {
+		3F0878C02189D70A002EE9A7 /* Type */ = {
 			isa = PBXGroup;
 			children = (
 				3F0878C32189D759002EE9A7 /* F.swift */,
+				3F75896321C7D09E00F06526 /* Weak.swift */,
 			);
-			path = Enums;
+			path = Type;
 			sourceTree = "<group>";
 		};
 		3F0878C72189D91E002EE9A7 /* Protocols */ = {
@@ -149,8 +157,8 @@
 			children = (
 				3F0878CA2189D975002EE9A7 /* MoneyGiver.swift */,
 				3F0878CC2189DA10002EE9A7 /* MoneyReceiver.swift */,
-				3FA2087A21942A9D006F3D1A /* Synchronizable.swift */,
 				3FA2087E219587ED006F3D1A /* Stateable.swift */,
+				3FA2087A21942A9D006F3D1A /* Synchronizable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -164,6 +172,7 @@
 				3F0878E5218B0E0B002EE9A7 /* Strideable+Extensions.swift */,
 				3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */,
 				3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */,
+				3F75896121C7B33D00F06526 /* ObservableObject+Observer.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -228,18 +237,20 @@
 				3F0878DA218AE611002EE9A7 /* Director.swift in Sources */,
 				3F0878E6218B0E0B002EE9A7 /* Strideable+Extensions.swift in Sources */,
 				3FA208712190416C006F3D1A /* RangeReplaceableCollection+Extension.swift in Sources */,
+				3F75896421C7D09E00F06526 /* Weak.swift in Sources */,
 				3F0878BD2189D4E3002EE9A7 /* Staff.swift in Sources */,
 				3F0878E8218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift in Sources */,
 				3F0878E4218B0DCC002EE9A7 /* main.swift in Sources */,
 				3F0878D12189E064002EE9A7 /* Atomic.swift in Sources */,
 				3F0878CF2189DBDD002EE9A7 /* Washer.swift in Sources */,
 				3F0878DE218AF798002EE9A7 /* CarWash.swift in Sources */,
-				3F1A064921BFD58A00D39F31 /* Emploee.swift in Sources */,
+				3F1A064921BFD58A00D39F31 /* Employee.swift in Sources */,
 				3F0878E0218AF80B002EE9A7 /* Optional+Extensions.swift in Sources */,
 				3F0878D42189E5BD002EE9A7 /* DispatchTime+Extensions.swift in Sources */,
 				3F0878DC218AF1E4002EE9A7 /* NSLocking+Extensions.swift in Sources */,
 				3F0878CD2189DA10002EE9A7 /* MoneyReceiver.swift in Sources */,
 				3F0878D82189EF8C002EE9A7 /* Accountant.swift in Sources */,
+				3F75896021C7A85D00F06526 /* ObservableObject.swift in Sources */,
 				3F0878D62189E831002EE9A7 /* Car.swift in Sources */,
 				3F0878C42189D759002EE9A7 /* F.swift in Sources */,
 				3F0878E2218AF900002EE9A7 /* Queue.swift in Sources */,
@@ -247,6 +258,7 @@
 				3FA2087B21942A9D006F3D1A /* Synchronizable.swift in Sources */,
 				3FC95C3B219ECACB007B1B78 /* Manager.swift in Sources */,
 				3FA2087D21942BCF006F3D1A /* Factory.swift in Sources */,
+				3F75896221C7B33D00F06526 /* ObservableObject+Observer.swift in Sources */,
 				3FA2087F219587ED006F3D1A /* Stateable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

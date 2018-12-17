@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MoneGiver {
+protocol MoneyGiver {
     
     func giveMoney() -> Int
 }

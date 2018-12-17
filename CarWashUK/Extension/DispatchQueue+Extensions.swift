@@ -28,7 +28,7 @@ extension DispatchQueue {
     
     func asyncAfterRepeating(
         interval: TimeInterval,
-        execute: @escaping F.Execute
+        execute: @escaping F.VoidExecute
     )
         -> Token
     {
@@ -41,7 +41,7 @@ extension DispatchQueue {
     private func nextStep(
         token: Token,
         interval: TimeInterval,
-        execute: @escaping F.Execute
+        execute: @escaping F.VoidExecute
     ) {
      self.asyncAfter(deadline: .after(interval: interval)) {
             if token.isRunning.value {

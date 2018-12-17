@@ -11,8 +11,7 @@ import Foundation
 
 enum F {
     
-    typealias Completion = () -> ()
-    typealias Execute = () -> ()
-    typealias ParamCompletion<Value> = (Value) -> ()
-
+    typealias VoidCompletion = () -> ()
+    typealias VoidExecute = () -> ()
+    typealias Completion<Value> = (Value) -> ()
 }

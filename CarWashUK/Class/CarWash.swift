@@ -17,12 +17,12 @@ class CarWash: Synchronizable {
     private let carsQueue = Queue<Car>()
     private var washersQueue = Queue<Washer>()
     private let washers: [Washer]
-    private var observers = [Emploee.Observer]()
+    private var observers = [ObservableObject<Employee.State>.Observer]()
     
     deinit {
-        self.observers.forEach {
-            $0.cancel()
-        }
+//        self.observers.forEach {
+//            $0.cancel()
+//        }
     }
     
     init(
@@ -47,31 +47,34 @@ class CarWash: Synchronizable {
     }
     
     func setup() {
-        self.washers.forEach { washer in
+        weak var weakSelf = self
+
+        self.washers.forEach { washer in  //  replacing forEach with map -> "Segmentation fault: 11"
             weak var weakWasher = washer
-            let washerObserver = washer.observer { [weak self] state in
+            
+            let washerObserver = washer.observer { state in
                 switch state {
                     case .available:
-                    self?.carsQueue.dequeue().apply(weakWasher?.doStaffWork)
+                    weakSelf?.carsQueue.dequeue().apply(weakWasher?.doStaffWork)
                     case .waitProcessing:
-                    weakWasher.do { self?.accountant.doStaffWork(object: $0) }
+                    weakWasher.do { weakSelf?.accountant.doStaffWork(object: $0) }
                     case .busy: return
-                    }
+                }
             }
             
             self.observers.append(washerObserver)
         }
         
-        let accountantObserver = self.accountant.observer { [weak self] in
+        let accountantObserver = self.accountant.observer {
             switch $0 {
                 case .available: return
                 case .waitProcessing:
-                (self?.accountant).apply(self?.director.doStaffWork)
+                (weakSelf?.accountant).apply(weakSelf?.director.doStaffWork)
                 case .busy: return
             }
         }
         
-        self.observers.append(accountantObserver)
+        self.observers += [accountantObserver]
     }
 }
 

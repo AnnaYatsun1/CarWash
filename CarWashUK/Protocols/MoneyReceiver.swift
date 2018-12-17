@@ -15,7 +15,7 @@ protocol MoneyReceiver {
 
 extension MoneyReceiver {
     
-    func takeMoney(from moneyGiver: MoneGiver) {
+    func takeMoney(from moneyGiver: MoneyGiver) {
         self.takeMoney(moneyGiver.giveMoney())
     }
 }

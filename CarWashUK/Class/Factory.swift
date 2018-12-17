@@ -9,14 +9,14 @@
 import Foundation
 
 class Factory: Synchronizable {
-    
-    let queue = DispatchQueue.background
-    let carWash: CarWash
-    let interval: TimeInterval
 
-    var token: DispatchQueue.Token? {
+    public var token: DispatchQueue.Token? {
         willSet { self.token?.stop() }
     }
+    
+    private let queue = DispatchQueue.background
+    private let carWash: CarWash
+    private let interval: TimeInterval
     
     deinit {
         self.stop()

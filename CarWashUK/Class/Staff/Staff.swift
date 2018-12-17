@@ -8,14 +8,7 @@
 
 import Foundation
 
-
-class Staff<Processing: MoneGiver>: Emploee, Synchronizable {
-    
-    public var objectCount = 0
-    public var completion: F.ParamCompletion<Processing>?
-    
-    private let queue = DispatchQueue.background
-    private let processedObjects = Queue(elements: [Processing]())
+class Staff<Processing: MoneyGiver>: Employee, Synchronizable {
     
     override public var state: State {
         get { return super.state }
@@ -28,9 +21,15 @@ class Staff<Processing: MoneGiver>: Emploee, Synchronizable {
         }
     }
     
-    var chekingForEmpty: Bool {
+    public var chekingForEmpty: Bool {
         return self.processedObjects.isEmpty
     }
+    
+    public var objectCount = 0
+    public var completion: F.Completion<Processing>?
+    
+    private let queue = DispatchQueue.background
+    private let processedObjects = Queue(elements: [Processing]())
     
     func doStaffWork(object: Processing) {
         self.synchronize {
@@ -40,15 +39,6 @@ class Staff<Processing: MoneGiver>: Emploee, Synchronizable {
             } else {
                 self.processedObjects.enqueue(object)
             }
-        }
-    }
-    
-    private func asyncWork(_ object: Processing) {
-        self.queue.asyncAfter(deadline: .randomDuration()) {
-            self.takeMoney(from: object)
-            self.performProcessing(object: object)
-            self.completeProcessing(object: object)
-            self.finishProcessing()
         }
     }
     
@@ -71,6 +61,15 @@ class Staff<Processing: MoneGiver>: Emploee, Synchronizable {
             } else {
                 self.state = .waitProcessing
             }
+        }
+    }
+    
+    private func asyncWork(_ object: Processing) {
+        self.queue.asyncAfter(deadline: .randomDuration()) {
+            self.takeMoney(from: object)
+            self.performProcessing(object: object)
+            self.completeProcessing(object: object)
+            self.finishProcessing()
         }
     }
 }

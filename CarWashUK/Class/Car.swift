@@ -8,9 +8,9 @@
 
 import Foundation
 
-class  Car: MoneGiver {
+class Car: MoneyGiver {
     
-    enum Status: String {
+    enum State: String {
         case clean
         case dirty
         
@@ -23,33 +23,33 @@ class  Car: MoneGiver {
         }
     }
     
-    private let privateState = Atomic(Status.dirty)
+    public let model: String
+    public let owner: String
     
-    let money: Atomic<Int>
-    let model: String
-    let owner: String
-
-    var state: Status {
+    public var state: State {
         get {
-            return self.privateState.value
+            return self.atomicState.value
         }
         set {
-            self.privateState.modify { $0 = newValue }
+            self.atomicState.modify { $0 = newValue }
         }
     }
     
+    private let atomicMoney: Atomic<Int>
+    private let atomicState = Atomic(State.dirty)
+
     init(
         money: Int,
         model: String,
         owner: String
     ) {
-        self.money = Atomic(money)
+        self.atomicMoney = Atomic(money)
         self.model = model
         self.owner = owner
     }
     
     func giveMoney() -> Int {
-        return self.money.modify { money in
+        return self.atomicMoney.modify { money in
             defer { money = 0 }
             
             return money
