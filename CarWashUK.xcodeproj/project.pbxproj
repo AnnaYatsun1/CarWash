@@ -126,6 +126,7 @@
 				3F0878E1218AF900002EE9A7 /* Queue.swift */,
 				3FA2087C21942BCF006F3D1A /* Factory.swift */,
 				3F75895F21C7A85D00F06526 /* ObservableObject.swift */,
+				3F75896121C7B33D00F06526 /* ObservableObject+Observer.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -172,7 +173,6 @@
 				3F0878E5218B0E0B002EE9A7 /* Strideable+Extensions.swift */,
 				3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */,
 				3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */,
-				3F75896121C7B33D00F06526 /* ObservableObject+Observer.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
