@@ -13,10 +13,12 @@ class Staff<Processing: MoneyGiver>: Employee, Synchronizable {
     override public var state: State {
         get { return super.state }
         set {
-            if newValue == .available && self.state == .busy && !self.chekingForEmpty {
-                self.restartIfNeeded()
-            } else {
-                super.state = newValue
+            self.synchronize {
+                if newValue == .available && self.state == .busy && !self.chekingForEmpty {
+                    self.restartIfNeeded()
+                } else {
+                    super.state = newValue
+                }
             }
         }
     }

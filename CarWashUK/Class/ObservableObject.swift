@@ -12,7 +12,7 @@ class ObservableObject<ObservableProperty> {
     
     typealias ObserverHandler = (ObservableProperty) -> ()
 
-    public let atomicObservers = Atomic([Observer]())
+    private let atomicObservers = Atomic([Observer]())
     
     func observer(handler: @escaping ObserverHandler) -> Observer {
         return self.atomicObservers.modify {

@@ -17,10 +17,10 @@ class CarWash: Synchronizable {
     private let carsQueue = Queue<Car>()
     private var washersQueue = Queue<Washer>()
     private let washers: [Washer]
-    private var observers = [ObservableObject<Employee.State>.Observer]()
+    private let observers = Atomic([Employee.Observer]())
     
     deinit {
-        self.observers.forEach {
+        self.observers.value.forEach {
             $0.cancel()
         }
     }
@@ -49,7 +49,7 @@ class CarWash: Synchronizable {
     func setup() {
         weak var weakSelf = self
         
-        self.washers.forEach { washer in  //  replacing forEach with map -> "Segmentation fault: 11"
+        self.washers.forEach { washer in 
             weak var weakWasher = washer
             
             let washerObserver = washer.observer { state in
@@ -57,12 +57,12 @@ class CarWash: Synchronizable {
                 case .available:
                     weakSelf?.carsQueue.dequeue().apply(weakWasher?.doStaffWork)
                 case .waitProcessing:
-                    weakWasher.do { weakSelf?.accountant.doStaffWork(object: $0) }
+                    weakWasher.apply(weakSelf?.accountant.doStaffWork) 
                 case .busy: return
                 }
             }
             
-            self.observers.append(washerObserver)
+            self.observers.value.append(washerObserver)
         }
         
         let accountantObserver = self.accountant.observer {
@@ -73,18 +73,8 @@ class CarWash: Synchronizable {
             case .busy: return
             }
         }
-         self.observers += [accountantObserver]
         
-//        let accountantObserver_ = self.accountant.observer(
-//            handler: weakify(value1: self.accountant, value2: self.director) { accountant, director, state in
-//                switch state {
-//                case .available: return
-//                case .waitProcessing:
-//                    director.doStaffWork(object: accountant)
-//                case .busy: return
-//                }
-//            }
-//        )
+         self.observers.value += [accountantObserver]
     }
 }
 

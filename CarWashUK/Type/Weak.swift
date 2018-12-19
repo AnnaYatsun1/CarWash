@@ -35,37 +35,14 @@ extension Weak {
         
         return weak
     }
-    
-    //  ?? for two diff types
-    @discardableResult
-    public func weakify<Wrapped: AnyObject, Result>(
-        value1: Wrapped, 
-        value2: Wrapped, 
-        execute: @escaping(Wrapped, Wrapped, Result) -> ()
-    ) 
-        -> (Result) -> () 
-    {
-        let weakValue1 = Weak<Wrapped>(value1)
-        let weakValue2 = Weak<Wrapped>(value2)
-        
-        return { [weak value1, weak value2] object in 
-            weakValue1.value.do { value1 in
-                weakValue2.value.do { value2 in
-                    execute(value1, value2, object)
-                }
-            }
-            
-        }
-    }
 }
 
-//  work
 @discardableResult
 public func weakify<Wrapped1: AnyObject, Wrapped2: AnyObject, Result>(
     value1: Wrapped1, 
     value2: Wrapped2, 
-    execute: @escaping(Wrapped1, Wrapped2, Result) -> ()
-    ) 
+    execute: @escaping (Wrapped1, Wrapped2, Result) -> ()
+) 
     -> (Result) -> () 
 {
     
