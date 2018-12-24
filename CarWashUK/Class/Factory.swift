@@ -2,7 +2,7 @@
 //  Factory.swift
 //  CarWashUK
 //
-//  Created by Student on 08/11/2018.
+//  Created by Anna Yatsun on 08/11/2018.
 //  Copyright © 2018 Student. All rights reserved.
 //
 
@@ -32,7 +32,7 @@ class Factory: Synchronizable {
             10.times {
                 self?.queue.async {
                     let someCar = Car(money: 10, model: "BMW", owner: "Вася")
-                    self?.carWash.process(car: someCar)
+                    self?.carWash.washCar(someCar)
                 }
             }
         }

@@ -2,13 +2,17 @@
 //  ObservableObject+Observer.swift
 //  CarWashUK
 //
-//  Created by Student on 17/12/2018.
+//  Created by Anna Yatsun on 17/12/2018.
 //  Copyright © 2018 Student. All rights reserved.
 //
 
 extension ObservableObject {
     
-    class Observer {
+    class Observer: Cancellable {
+
+        public var isCancelled: Bool {
+            return !self.isObserving
+        }
         
         public let handler: ObserverHandler
         

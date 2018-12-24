@@ -2,7 +2,7 @@
 //  Staff.swift
 //  CarWashUK
 //
-//  Created by Student on 31/10/2018.
+//  Created by Anna Yatsun on 31/10/2018.
 //  Copyright © 2018 Student. All rights reserved.
 //
 
@@ -13,14 +13,11 @@ class Staff<Processing: MoneyGiver>: Employee, Synchronizable {
     override public var state: State {
         get { return super.state }
         set {
-            self.synchronize {
-                if newValue == .available && self.state == .busy && !self.chekingForEmpty {
-                    self.restartIfNeeded()
-                } else {
-                    super.state = newValue
-                }
+            self.atomicState.modify {
+                $0 = newValue
+                self.notify(state: $0)
             }
-        }
+        }	
     }
     
     public var chekingForEmpty: Bool {
@@ -33,46 +30,25 @@ class Staff<Processing: MoneyGiver>: Employee, Synchronizable {
     private let queue = DispatchQueue.background
     private let processedObjects = Queue(elements: [Processing]())
     
-    func doStaffWork(object: Processing) {
-        self.synchronize {
-            if self.state == .available {
-                self.state = .busy
-                self.asyncWork(object)
-            } else {
-                self.processedObjects.enqueue(object)
+    func performProcessing(object: Processing) { }
+    
+    func completeProcessing(object: Processing) { }
+    
+    func completePerformWork() {
+        self.state = .waitProcessing
+    }
+    
+    func processObject(_ processedObject: Processing) {
+        self.atomicState.modify { state in
+            if state == .available {
+                state = .busy
+                self.queue.asyncAfter(deadline: .randomDuration())  {
+                    self.takeMoney(processedObject.giveMoney())
+                    self.performProcessing(object: processedObject)
+                    self.completeProcessing(object: processedObject)
+                    self.completePerformWork()
+                }
             }
-        }
-    }
-    
-    open func performProcessing(object: Processing) {
-        
-    }
-    
-    open func completeProcessing(object: Processing) {
-        
-    }
-    
-    open func finishProcessing() {
-        self.restartIfNeeded()
-    }
-    
-    func restartIfNeeded() {
-        self.synchronize {
-            if let object = self.processedObjects.dequeue() {
-                self.asyncWork(object)
-            } else {
-                self.state = .waitProcessing
-            }
-        }
-    }
-    
-    private func asyncWork(_ object: Processing) {
-        self.queue.asyncAfter(deadline: .randomDuration()) {
-            self.takeMoney(from: object)
-            self.performProcessing(object: object)
-            self.completeProcessing(object: object)
-            self.finishProcessing()
         }
     }
 }
-

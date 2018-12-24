@@ -2,32 +2,24 @@
 ////  main.swift
 ////  CarWash
 ////
-////  Created by Student on 19.10.2018.
+////  Created by Anna Yatsun on 19.10.2018.
 ////  Copyright © 2018 Student. All rights reserved.
 ////
 //
 import Foundation
 
-let washer1 =  Washer(name: "Lika")
-let washer2 =  Washer(name: "Tanay")
-let washer3 =  Washer( name: "Lika")
-////
+let washers = (0...1).map { Washer(name: "Ivan\($0)") }
+let directors = [Director(name: "Petro")]
+let accountants = [Accountant(name: "Alex")]
 let director = Director(name: "Nila")
 let accountant =  Accountant(name: "Fima")
 let interval = 4.0
-let washers = [washer1, washer2]
-////
-let carWash = CarWash(washers: washers, accountant: accountant, director: director)
+let carWash = CarWash(accountant: accountants, director: directors, washers: washers)
 let factory = Factory(carWash: carWash, interval: interval)
 factory.startMakeCars()
-//////sleep(11)
-//////factory.stop()
+//sleep(11)
+//factory.stop()
 RunLoop.current.run()
-//
-//
-//
-//
-//
 
 
 

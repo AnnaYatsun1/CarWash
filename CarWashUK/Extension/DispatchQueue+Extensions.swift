@@ -2,7 +2,7 @@
 //  DispatchQueue.swift
 //  CarWashUK
 //
-//  Created by Student on 01/11/2018.
+//  Created by Anna Yatsun on 01/11/2018.
 //  Copyright © 2018 Student. All rights reserved.
 //
 
@@ -17,7 +17,14 @@ extension DispatchQueue {
 
 extension DispatchQueue {
 
-    class Token {
+    class Token: Cancellable {
+        var isCancelled: Bool {
+            return !self.isRunning.value
+        }
+        
+        func cancel() {
+            self.stop()
+        }
         
         let isRunning = Atomic(true)
         

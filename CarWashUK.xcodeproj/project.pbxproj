@@ -25,9 +25,13 @@
 		3F0878E6218B0E0B002EE9A7 /* Strideable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E5218B0E0B002EE9A7 /* Strideable+Extensions.swift */; };
 		3F0878E8218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */; };
 		3F1A064921BFD58A00D39F31 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1A064821BFD58A00D39F31 /* Employee.swift */; };
+		3F48FD0821D0E55D00F349F0 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F48FD0721D0E55D00F349F0 /* test.swift */; };
+		3F48FD0A21D0E5C800F349F0 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F48FD0921D0E5C800F349F0 /* Cancellable.swift */; };
 		3F75896021C7A85D00F06526 /* ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75895F21C7A85D00F06526 /* ObservableObject.swift */; };
-		3F75896221C7B33D00F06526 /* ObservableObject+Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75896121C7B33D00F06526 /* ObservableObject+Observer.swift */; };
+		3F75896221C7B33D00F06526 /* ObservableObject.Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75896121C7B33D00F06526 /* ObservableObject.Observer.swift */; };
 		3F75896421C7D09E00F06526 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75896321C7D09E00F06526 /* Weak.swift */; };
+		3F75897121CA4C3400F06526 /* EmployeeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75897021CA4C3400F06526 /* EmployeeManager.swift */; };
+		3F75897521D0E31B00F06526 /* AbstractCancellableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75897421D0E31B00F06526 /* AbstractCancellableObject.swift */; };
 		3FA208712190416C006F3D1A /* RangeReplaceableCollection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */; };
 		3FA2087B21942A9D006F3D1A /* Synchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087A21942A9D006F3D1A /* Synchronizable.swift */; };
 		3FA2087D21942BCF006F3D1A /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2087C21942BCF006F3D1A /* Factory.swift */; };
@@ -67,9 +71,13 @@
 		3F0878E5218B0E0B002EE9A7 /* Strideable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Strideable+Extensions.swift"; sourceTree = "<group>"; };
 		3F0878E7218B0F7D002EE9A7 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		3F1A064821BFD58A00D39F31 /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
+		3F48FD0721D0E55D00F349F0 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		3F48FD0921D0E5C800F349F0 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 		3F75895F21C7A85D00F06526 /* ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableObject.swift; sourceTree = "<group>"; };
-		3F75896121C7B33D00F06526 /* ObservableObject+Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableObject+Observer.swift"; sourceTree = "<group>"; };
+		3F75896121C7B33D00F06526 /* ObservableObject.Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableObject.Observer.swift; sourceTree = "<group>"; };
 		3F75896321C7D09E00F06526 /* Weak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
+		3F75897021CA4C3400F06526 /* EmployeeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeManager.swift; sourceTree = "<group>"; };
+		3F75897421D0E31B00F06526 /* AbstractCancellableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractCancellableObject.swift; sourceTree = "<group>"; };
 		3FA208702190416C006F3D1A /* RangeReplaceableCollection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RangeReplaceableCollection+Extension.swift"; sourceTree = "<group>"; };
 		3FA2087A21942A9D006F3D1A /* Synchronizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizable.swift; sourceTree = "<group>"; };
 		3FA2087C21942BCF006F3D1A /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
@@ -119,14 +127,16 @@
 		3F0878BE2189D6EF002EE9A7 /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				3F0878D02189E064002EE9A7 /* Atomic.swift */,
 				3F0878BF2189D6FA002EE9A7 /* Staff */,
 				3F0878D52189E831002EE9A7 /* Car.swift */,
+				3F48FD0721D0E55D00F349F0 /* test.swift */,
 				3F0878DD218AF798002EE9A7 /* CarWash.swift */,
 				3F0878E1218AF900002EE9A7 /* Queue.swift */,
 				3FA2087C21942BCF006F3D1A /* Factory.swift */,
 				3F75895F21C7A85D00F06526 /* ObservableObject.swift */,
-				3F75896121C7B33D00F06526 /* ObservableObject+Observer.swift */,
+				3F75896121C7B33D00F06526 /* ObservableObject.Observer.swift */,
+				3F75897021CA4C3400F06526 /* EmployeeManager.swift */,
+				3F75897421D0E31B00F06526 /* AbstractCancellableObject.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -147,6 +157,7 @@
 		3F0878C02189D70A002EE9A7 /* Type */ = {
 			isa = PBXGroup;
 			children = (
+				3F0878D02189E064002EE9A7 /* Atomic.swift */,
 				3F0878C32189D759002EE9A7 /* F.swift */,
 				3F75896321C7D09E00F06526 /* Weak.swift */,
 			);
@@ -156,6 +167,7 @@
 		3F0878C72189D91E002EE9A7 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				3F48FD0921D0E5C800F349F0 /* Cancellable.swift */,
 				3F0878CA2189D975002EE9A7 /* MoneyGiver.swift */,
 				3F0878CC2189DA10002EE9A7 /* MoneyReceiver.swift */,
 				3FA2087E219587ED006F3D1A /* Stateable.swift */,
@@ -234,6 +246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F48FD0A21D0E5C800F349F0 /* Cancellable.swift in Sources */,
 				3F0878DA218AE611002EE9A7 /* Director.swift in Sources */,
 				3F0878E6218B0E0B002EE9A7 /* Strideable+Extensions.swift in Sources */,
 				3FA208712190416C006F3D1A /* RangeReplaceableCollection+Extension.swift in Sources */,
@@ -244,7 +257,9 @@
 				3F0878D12189E064002EE9A7 /* Atomic.swift in Sources */,
 				3F0878CF2189DBDD002EE9A7 /* Washer.swift in Sources */,
 				3F0878DE218AF798002EE9A7 /* CarWash.swift in Sources */,
+				3F48FD0821D0E55D00F349F0 /* test.swift in Sources */,
 				3F1A064921BFD58A00D39F31 /* Employee.swift in Sources */,
+				3F75897521D0E31B00F06526 /* AbstractCancellableObject.swift in Sources */,
 				3F0878E0218AF80B002EE9A7 /* Optional+Extensions.swift in Sources */,
 				3F0878D42189E5BD002EE9A7 /* DispatchTime+Extensions.swift in Sources */,
 				3F0878DC218AF1E4002EE9A7 /* NSLocking+Extensions.swift in Sources */,
@@ -258,8 +273,9 @@
 				3FA2087B21942A9D006F3D1A /* Synchronizable.swift in Sources */,
 				3FC95C3B219ECACB007B1B78 /* Manager.swift in Sources */,
 				3FA2087D21942BCF006F3D1A /* Factory.swift in Sources */,
-				3F75896221C7B33D00F06526 /* ObservableObject+Observer.swift in Sources */,
+				3F75896221C7B33D00F06526 /* ObservableObject.Observer.swift in Sources */,
 				3FA2087F219587ED006F3D1A /* Stateable.swift in Sources */,
+				3F75897121CA4C3400F06526 /* EmployeeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
